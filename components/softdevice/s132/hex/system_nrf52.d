@@ -1,0 +1,14 @@
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\system_nrf52.c
+..\..\components\softdevice\s132\hex\system_nrf52.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\nrf.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\nrf52.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: C:\Keil_v5\ARM\CMSIS\Include\core_cm4.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: C:\Keil_v5\ARM\CMSIS\Include\core_cm4_simd.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\system_nrf52.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\nrf52_bitfields.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\nrf51_to_nrf52.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\nrf52_name_change.h
+..\..\components\softdevice\s132\hex\system_nrf52.o: ..\..\modules\nrfx\mdk\compiler_abstraction.h
