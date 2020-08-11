@@ -3032,7 +3032,7 @@
  
 
 #ifndef NRFX_RTC1_ENABLED
-#define NRFX_RTC1_ENABLED 0
+#define NRFX_RTC1_ENABLED 1
 #endif
 
 // <q> NRFX_RTC2_ENABLED  - Enable RTC2 instance
@@ -5080,7 +5080,7 @@
 // <e> RTC_ENABLED - nrf_drv_rtc - RTC peripheral driver - legacy layer
 //==========================================================
 #ifndef RTC_ENABLED
-#define RTC_ENABLED 0
+#define RTC_ENABLED 1
 #endif
 // <o> RTC_DEFAULT_CONFIG_FREQUENCY - Frequency  <16-32768> 
 
@@ -5117,7 +5117,7 @@
  
 
 #ifndef RTC0_ENABLED
-#define RTC0_ENABLED 1
+#define RTC0_ENABLED 0
 #endif
 
 // <q> RTC1_ENABLED  - Enable RTC1 instance
@@ -5143,6 +5143,7 @@
 
 // <e> SAADC_ENABLED - nrf_drv_saadc - SAADC peripheral driver - legacy layer
 //==========================================================
+
 #ifndef SAADC_ENABLED
 #define SAADC_ENABLED 0
 #endif
@@ -5481,7 +5482,7 @@
 // <e> TWIS_ENABLED - nrf_drv_twis - TWIS peripheral driver - legacy layer
 //==========================================================
 #ifndef TWIS_ENABLED
-#define TWIS_ENABLED 0
+#define TWIS_ENABLED 1
 #endif
 // <q> TWIS0_ENABLED  - Enable TWIS0 instance
  
@@ -7600,7 +7601,7 @@
 // <i> Function for getting the timestamp is provided by the user
 //==========================================================
 #ifndef NRF_LOG_USES_TIMESTAMP
-#define NRF_LOG_USES_TIMESTAMP 0
+#define NRF_LOG_USES_TIMESTAMP 1
 #endif
 // <o> NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY - Default frequency of the timestamp (in Hz) or 0 to use app_timer frequency. 
 #ifndef NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY

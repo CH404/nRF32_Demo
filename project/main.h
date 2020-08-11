@@ -18,6 +18,40 @@
 
 ***********************************************/
 
+#ifdef MAIN_GLOBAL
+#define MAIN_EXT
+#else
+#define MAIN_EXT	extern
+#endif
+
+
+
+#define APP_BLE_CONN_CFG_TAG            1                                       /**< A tag identifying the SoftDevice BLE configuration. */
+#define APP_BLE_OBSERVER_PRIO				 3
+#define APP_ADV_DURATION					18000
+#define APP_ADV_INTERVAL					300
+
+
+#define MIN_CONN_INTERVAL               MSEC_TO_UNITS(100, UNIT_1_25_MS)        /**< Minimum acceptable connection interval (0.1 seconds). */
+#define MAX_CONN_INTERVAL               MSEC_TO_UNITS(200, UNIT_1_25_MS)        /**< Maximum acceptable connection interval (0.2 second). */
+#define SLAVE_LATENCY                   0                                       /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)         /**< Connection supervisory timeout (4 seconds). */
+
+#define DEVICE_NAME					    	"RED_MI"
+
+
+#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000)
+#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000)
+#define MAX_CONN_PARAMS_UPDATE_COUNT    3 
+
+#define SEC_PARAM_BOND                  1                                       /**< Perform bonding. */
+#define SEC_PARAM_MITM                  0                                       /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC                  0                                       /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS              0                                       /**< Keypress notifications not enabled. */
+#define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                    /**< No I/O capabilities. */
+#define SEC_PARAM_OOB                   0                                       /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE          7                                       /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE          16                                      /**< Maximum encryption key size. */
 
 
 #define LED_RED		15
@@ -25,10 +59,20 @@
 #define LED_BLINKY_TIME    500ms
 
 
-static void log_init(void);
-static void timer_init(void);
-static void leds_init(void);
 
+
+
+#define LED_TOGGLE_INTERVAL APP_TIMER_TICKS(500)
+
+
+
+
+
+
+MAIN_EXT void main_log_init(void);
+MAIN_EXT void main_timer_init(void);
+MAIN_EXT void main_leds_init(void);
+MAIN_EXT void main_lfclk_config(void);
 
 
 

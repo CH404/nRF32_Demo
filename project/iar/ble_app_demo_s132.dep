@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <fileVersion>4</fileVersion>
+    <fileChecksum>721124299</fileChecksum>
+    <configuration>
+        <name>Debug</name>
+        <outputs>
+            <file>$PROJ_DIR$\Debug\Obj\peer_id.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\security_dispatcher.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\auth_status_tracker.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_data_storage.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\gatts_cache_manager.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_database.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\gatt_cache_manager.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\gatt_cache_manager.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\id_manager.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\pm_buffer.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\auth_status_tracker.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\gatts_cache_manager.pbi</file>
+            <file>$PROJ_DIR$\..\..\components\ble\nrf_ble_qwr\nrf_ble_qwr.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_manager_handler.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\utf.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_data_storage.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_database.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\id_manager.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_id.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_manager.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_app_demo_s132.pbd</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_manager_handler.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\pm_buffer.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\security_dispatcher.pbi</file>
+            <file>$PROJ_DIR$\..\..\external\utf_converter\utf.c</file>
+            <file>$PROJ_DIR$\Debug\Exe\ble_app_demo_s132.out</file>
+            <file>$PROJ_DIR$\Debug\Obj\utf.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\peer_manager.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\security_manager.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\common\ble_advdata.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\common\ble_srv_common.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+            <file>$PROJ_DIR$\..\..\external\utf_converter\utf.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\common\ble_conn_params.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\common\ble_conn_state.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\nrf_ble_gatt.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\nrf_ble_gatt.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_advertising.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_advertising.pbi</file>
+            <file>$PROJ_DIR$\..\..\modules\nrfx\mdk\system_nrf52.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\common\ble_conn_state.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\security_manager.pbi</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager_types.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\ble_advertising\ble_advertising.c</file>
+            <file>$PROJ_DIR$\..\..\modules\nrfx\mdk\arm_startup_nrf52.s</file>
+            <file>$PROJ_DIR$\Debug\Obj\arm_startup_nrf52.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\system_nrf52.o</file>
+            <file>$PROJ_DIR$\..\..\modules\nrfx\mdk\system_nrf52.h</file>
+            <file>$PROJ_DIR$\..\..\modules\nrfx\mdk\compiler_abstraction.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager_internal.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\system_nrf52.pbi</file>
+            <file>$PROJ_DIR$\..\..\modules\nrfx\mdk\nrf.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager_handler.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_database.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\pm_buffer.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\security_manager.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_data_storage.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\nrf_ble_qwr.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\nrf_ble_qwr.pbi</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\id_manager.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_database.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_id.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\gatt_cache_manager.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\nrf_ble_gatt\nrf_ble_gatt.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\gatts_cache_manager.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\auth_status_tracker.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager_handler.c</file>
+            <file>$PROJ_DIR$\..\..\components\ble\peer_manager\security_dispatcher.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_conn_params.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_srv_common.o</file>
+            <file>$PROJ_DIR$\..\..\components\ble\common\ble_srv_common.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+            <file>$PROJ_DIR$\..\..\components\ble\common\ble_advdata.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_conn_state.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_conn_params.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_conn_state.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_srv_common.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_advdata.pbi</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\ble_advdata.o</file>
+        </outputs>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\nrf_ble_qwr\nrf_ble_qwr.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 66</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 67</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\utf_converter\utf.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 14</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 26</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 38 29 39 36 34 35 33 32 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\common\ble_advdata.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 89</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 86</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 87 38 79 36 32 88 39 41 80 81 34 29</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\common\ble_srv_common.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 78</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 85</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 39 88 41 32 87 36 38 34 29 80 79</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\common\ble_conn_params.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 77</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 83</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\common\ble_conn_state.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 82</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 84</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 36 34 32 88 87 38 29 39 80 47 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\modules\nrfx\mdk\system_nrf52.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 53</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 57</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 38 29 58 55 88 54 39 34 36 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\ble_advertising\ble_advertising.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 44</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 45</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\modules\nrfx\mdk\arm_startup_nrf52.s</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 52</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\pm_buffer.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 9</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 22</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\security_manager.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 28</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 48</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 27</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 19</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_data_storage.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 3</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 15</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\id_manager.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 8</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 17</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_database.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 5</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 16</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_id.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 0</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\gatt_cache_manager.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 7</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 6</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\nrf_ble_gatt\nrf_ble_gatt.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 43</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 42</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\gatts_cache_manager.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 4</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 11</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\auth_status_tracker.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 2</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 10</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\peer_manager_handler.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 13</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 21</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 34 49 59 88 56 38 29 39 36 61 41 33 60 32</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\peer_manager\security_dispatcher.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 1</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 23</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 25</file>
+                </tool>
+            </outputs>
+        </file>
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>ILINK</tool>
+        </forcedrebuild>
+    </configuration>
+    <configuration>
+        <name>Release</name>
+        <outputs />
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>ILINK</tool>
+        </forcedrebuild>
+    </configuration>
+</project>
