@@ -6,6 +6,8 @@ APP_TIMER_DEF(led_timer);
 NRF_BLE_GATT_DEF(m_gatt);//定义gatt模块实例
 static void led_timer_handler(void *p_context)
 {
+	
+		UNUSED_PARAMETER(p_context);	//不使用p_context,不要报警
 		nrf_gpio_pin_toggle(LED_RED);
 		//NRF_LOG_INFO("LED_toggle.");
 }
@@ -28,6 +30,13 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 		case BLE_GAP_EVT_CONNECTED:
 			NRF_LOG_INFO("Connected");
 			break;
+		case BLE_GAP_EVT_TIMEOUT:
+			NRF_LOG_INFO("Timeout");
+			break;
+		case BLE_GAP_EVT_ADV_SET_TERMINATED:
+			NRF_LOG_INFO("advertising terminated");
+			main_led_off();
+			break;
 		default:
 			NRF_LOG_INFO("%d",p_ble_evt->header.evt_id);
 			break;
@@ -38,12 +47,12 @@ static void ble_stack_init(void)
 {
 	//请求使能softdevice,会根据sdk_config参数配置低频时钟
 	ret_code_t err_code = nrf_sdh_enable_request();
-	G_CHECK_ERROR_CODE_INFO(err_code);
+	//G_CHECK_ERROR_CODE_INFO(err_code);
 	
 	//根据sdk_config.h中的参数而皮质BLE协议栈，获取RAM起始地址
 	uint32_t ram_start = 0;
 	err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG,&ram_start);
-	G_CHECK_ERROR_CODE_INFO(err_code);
+	//G_CHECK_ERROR_CODE_INFO(err_code);
 	
 	//使能BLE协议栈
 	err_code = nrf_sdh_ble_enable(&ram_start);
@@ -66,10 +75,13 @@ static void gap_params_init(void)
 	BLE_GAP_CONN_SEC_MODE_SET_OPEN(&sec_mode);
 	
 	err_code = sd_ble_gap_device_name_set(&sec_mode,
-													(const uint8_t*)DEVICE_NAME,
-													 strlen(DEVICE_NAME));
+				             (const uint8_t*)DEVICE_NAME,
+					      strlen(DEVICE_NAME));
+        NRF_LOG_INFO("name size %d",sizeof(DEVICE_NAME));
 													
 	G_CHECK_ERROR_CODE_INFO(err_code);
+													
+	err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_OUTDOOR_SPORTS_ACT_LOC_AND_NAV_POD);
 	
 							
 	memset(&gap_conn_params,0,sizeof(gap_conn_params));												
@@ -80,6 +92,17 @@ static void gap_params_init(void)
 
 	err_code = sd_ble_gap_ppcp_set(&gap_conn_params);		
 	G_CHECK_ERROR_CODE_INFO(err_code);
+													
+	static ble_gap_addr_t my_addr;
+	err_code = sd_ble_gap_addr_get(&my_addr);
+	APP_ERROR_CHECK(err_code);
+/*	if(err_code == NRF_SUCCESS)
+	{
+		NRF_LOG_INFO("Address type: %02x",my_addr.addr_type);
+		NRF_LOG_INFO("Address: %02x:%02x:%02x:%02x:%02x:%02x",my_addr.addr[0],my_addr.addr[1],my_addr.addr[2],
+																				my_addr.addr[3],my_addr.addr[4],my_addr.addr[5]);
+	}
+	 NRF_LOG_INFO("name size %d",sizeof(my_addr));	*/											
 }
 
 
@@ -87,71 +110,9 @@ static void gatt_init(void)
 {
     ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
     G_CHECK_ERROR_CODE_INFO(err_code);
-	  NRF_LOG_INFO("%d",err_code);
 }
 
-static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
-{
-	switch(ble_adv_evt)
-	{
-		//快速广播事件
-		case BLE_ADV_EVT_FAST:
-			NRF_LOG_INFO("FAST advertising.");
-			break;
-		
-		case BLE_ADV_EVT_IDLE:
-			NRF_LOG_INFO("advertising timeout.");
-			break;
-		case BLE_ADV_EVT_DIRECTED_HIGH_DUTY:
-			NRF_LOG_INFO("directed advertising.");
-			break;
-		case BLE_ADV_EVT_DIRECTED:
-			NRF_LOG_INFO("advertising BLE_ADV_EVT_DIRECTED.");
-			break;
-		case BLE_ADV_EVT_SLOW:
-			NRF_LOG_INFO("advertising BLE_ADV_EVT_SLOW.");
-			break;
-		case BLE_ADV_EVT_FAST_WHITELIST:      /**< Fast advertising mode using the whitelist has started. */
-			NRF_LOG_INFO("advertising BLE_ADV_EVT_FAST_WHITELIST.");
-			break;
-		case BLE_ADV_EVT_SLOW_WHITELIST:     /**< Slow advertising mode using the whitelist has started. */
-			NRF_LOG_INFO("advertising BLE_ADV_EVT_SLOW_WHITELIST.");
-			break;
-		case BLE_ADV_EVT_WHITELIST_REQUEST:   /**< Request a whitelist from the main application. For whitelist advertising to work, the whitelist must be set when this event occurs. */
-			NRF_LOG_INFO("advertising BLE_ADV_EVT_WHITELIST_REQUEST.");
-			break;
-		case BLE_ADV_EVT_PEER_ADDR_REQUEST:
-			NRF_LOG_INFO("advertising BLE_ADV_EVT_PEER_ADDR_REQUEST.");
-			break;
-		default:
-			NRF_LOG_INFO("default.");
-	}
-}
 
-BLE_ADVERTISING_DEF(m_advertising);
-static void advertising_init(void)
-{
-	ret_code_t err_code = NRF_SUCCESS;
-	ble_advertising_init_t init;
-	 memset(&init, 0, sizeof(init));
-	//全名
-	init.advdata.name_type = BLE_ADVDATA_FULL_NAME;
-	init.advdata.include_appearance = true;
-	init.advdata.flags = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-	
-	init.config.ble_adv_fast_enabled = true;	//快速广播
-
-	init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;	//广播间隔
-	init.config.ble_adv_fast_timeout = APP_ADV_DURATION;	//广播持续时间
-	
-	init.evt_handler = on_adv_evt;	//广播回调函数
-	
-	err_code = ble_advertising_init(&m_advertising,&init);
-	G_CHECK_ERROR_CODE_INFO(err_code);
-//	NRF_LOG_INFO("%d",err_code);
-	ble_advertising_conn_cfg_tag_set(&m_advertising,APP_BLE_CONN_CFG_TAG);
-	
-}
 
 NRF_BLE_QWR_DEF(m_qwr);
 static void nrf_qwr_error_handler(uint32_t nrf_error)
@@ -164,11 +125,11 @@ static void services_init(void)
 	ret_code_t err_code;
 	nrf_ble_qwr_init_t qwr_init = {0};
 	
-	 qwr_init.error_handler = nrf_qwr_error_handler;
+   qwr_init.error_handler = nrf_qwr_error_handler;
 
     err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
-    G_CHECK_ERROR_CODE_INFO(err_code);
-//	NRF_LOG_INFO("%d",err_code);
+  //  G_CHECK_ERROR_CODE_INFO(err_code);
+	NRF_LOG_INFO("%d",err_code);
 }	
 
 uint32_t get_rtc_counter(void)
@@ -191,19 +152,20 @@ void main_log_init(void)
 void main_timer_init(void)
 {
 	ret_code_t err_code = app_timer_init();
-	APP_ERROR_CHECK(err_code);
-	
+	APP_ERROR_CHECK(err_code);	
 	if(err_code == NRF_SUCCESS)
 		NRF_LOG_INFO("timer_init success");
-	
+
 
 	err_code = app_timer_create(&led_timer,APP_TIMER_MODE_REPEATED,led_timer_handler);
 	APP_ERROR_CHECK(err_code);
 	if(err_code == NRF_SUCCESS)
 		NRF_LOG_INFO("app timer creat success");
+
 	
 	err_code = app_timer_start(led_timer,LED_TOGGLE_INTERVAL,NULL);//并不会启动RTC1
 	APP_ERROR_CHECK(err_code);
+
 }
 
 void main_leds_init(void)
@@ -218,6 +180,16 @@ void main_leds_init(void)
 	nrf_gpio_pin_clear(LED_GREEN);
 	NRF_LOG_INFO("leds_init success");
 }
+
+void main_led_off(void)
+{
+	app_timer_stop(led_timer);
+	nrf_gpio_pin_clear(LED_RED);
+}
+
+
+
+
 //配置低频时钟
 void main_lfclk_config(void)
 {
@@ -311,22 +283,10 @@ static void peer_manager_init(void)
     err_code = pm_register(pm_evt_handler);
     APP_ERROR_CHECK(err_code);
 }*/
-static void advertising_start(bool erase_bonds)
-{
-    if (erase_bonds == true)
-    {
-        // Advertising is started by PM_EVT_PEERS_DELETED_SUCEEDED event
-    }
-    else
-    {
-		 NRF_LOG_INFO("advertising_start");
-       ret_code_t err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
 
-        APP_ERROR_CHECK(err_code);
-    }
-}
 static void idle_state_handle(void)
 {
+	 //NRF_LOG_INFO("idle_state_handle");
     if (NRF_LOG_PROCESS() == false)
     {
         nrf_pwr_mgmt_run();
@@ -336,16 +296,21 @@ int main(void)
 {
 	main_log_init();
 	main_leds_init();
+//	main_lfclk_config();
 	main_timer_init();
 	power_management_init();
 	ble_stack_init();
 	gap_params_init();
 	gatt_init();
-	advertising_init();
+//	advertising_init();
+    //    advertising1_init();
+        advertising_all_params_init();
 	services_init();
+
 	conn_params_init();
-	//peer_manager_init();
-	advertising_start(false);
+//	peer_manager_init();
+        advertising_start();
+	
 	for(;;)
 	{
 	//	NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());

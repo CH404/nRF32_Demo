@@ -1,0 +1,40 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__ = 0x26000; //向量表的起始地址
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = 0x26000;    	//ROM的起始地址
+define symbol __ICFEDIT_region_ROM_end__   = 0x7ffff;    	//ROM的结束地址
+define symbol __ICFEDIT_region_RAM_start__ = 0x20002218; 	//RAM的起始地址
+define symbol __ICFEDIT_region_RAM_end__   = 0x2000ffff; 	//RAM的结束地址
+export symbol __ICFEDIT_region_RAM_start__;
+export symbol __ICFEDIT_region_RAM_end__;
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 8192; 	//栈的大小
+define symbol __ICFEDIT_size_heap__   = 8192; 	//堆的大小
+/**** End of ICF editor section. ###ICF###*/
+
+define memory mem with size = 4G;	//定义芯片的存储空间大�?
+//ROM的大�?
+define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
+//RAM的大�?
+define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__];
+//栈与堆大小，8字节对齐
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+define block RO_END    with alignment = 8, size = 0     { };
+
+initialize by copy { readwrite };	//启动时将RW数据搬移到RAM中，即进行RW数据初始�?
+do not initialize  { section .noinit };//不初始化�?noinit性质的块
+
+keep { section .intvec };
+//在__ICFEDIT_intvec_start__处放�?intvec,即向量表
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
+//在ROM中放置的是只读数据和代码	
+place in ROM_region   { readonly,
+                        block RO_END };
+						//在RAM中放置可读写数据 ,堆与�?
+place in RAM_region   { readwrite,
+                        block CSTACK,
+                        block HEAP };

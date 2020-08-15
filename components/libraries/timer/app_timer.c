@@ -354,7 +354,7 @@ static bool timer_list_remove(timer_node_t * p_timer)
  */
 static void timer_timeouts_check_sched(void)
 {
-    NVIC_SetPendingIRQ(RTC1_IRQn);
+  //  NVIC_SetPendingIRQ(RTC1_IRQn);
 }
 
 

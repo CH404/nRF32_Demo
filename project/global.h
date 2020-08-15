@@ -3,7 +3,7 @@
 
 
 
-
+#include "nrf_strerror.h"
 
 #include "sdk_config.h"
 #include "app_timer.h"
@@ -16,15 +16,16 @@
 #include "nrf_sdh_soc.h"
 
 #include "ble_gap.h"
+#include "ble_types.h"
 
 #include "nrf_ble_gatt.h"
-#include "ble_advertising.h"
 #include "nrf_ble_qwr.h"
 #include "peer_manager.h"
 #include "ble_conn_params.h"
 
 #include "main.h"
 //#include "rtc.h"
+#include "advertising.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"

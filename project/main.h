@@ -28,8 +28,6 @@
 
 #define APP_BLE_CONN_CFG_TAG            1                                       /**< A tag identifying the SoftDevice BLE configuration. */
 #define APP_BLE_OBSERVER_PRIO				 3
-#define APP_ADV_DURATION					18000
-#define APP_ADV_INTERVAL					300
 
 
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(100, UNIT_1_25_MS)        /**< Minimum acceptable connection interval (0.1 seconds). */
@@ -37,7 +35,7 @@
 #define SLAVE_LATENCY                   0                                       /**< Slave latency. */
 #define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)         /**< Connection supervisory timeout (4 seconds). */
 
-#define DEVICE_NAME					    	"RED_MI"
+
 
 
 #define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000)
@@ -73,7 +71,7 @@ MAIN_EXT void main_log_init(void);
 MAIN_EXT void main_timer_init(void);
 MAIN_EXT void main_leds_init(void);
 MAIN_EXT void main_lfclk_config(void);
-
+MAIN_EXT void main_led_off(void);
 
 
 

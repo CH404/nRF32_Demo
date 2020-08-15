@@ -405,6 +405,11 @@
               <FileType>5</FileType>
               <FilePath>..\config\sdk_config.h</FilePath>
             </File>
+            <File>
+              <FileName>advertising.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\app\advertising.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -574,6 +579,11 @@
               <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\libraries\strerror\nrf_strerror.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_hrs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\ble\ble_services\ble_hrs\ble_hrs.c</FilePath>
             </File>
           </Files>
         </Group>
