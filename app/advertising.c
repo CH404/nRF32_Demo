@@ -175,6 +175,11 @@ void advertising1_init(void)
   ble_advertising_conn_cfg_tag_set(&m_advertising,APP_BLE_CONN_CFG_TAG);
   
 }
+/*****************************************************
+函数名：void advertising_start1(void)
+参数：无
+作用：启动广播，直接调用的协议栈sd_ble_gap_adv_start函数
+******************************************************/
 void advertising_start1(void)
 {                               //开启广播 ble_advertising_start是此函数的封装
    ret_code_t err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
@@ -187,7 +192,11 @@ void advertising_start1(void)
    NRF_LOG_INFO("%d:%s:%d",__LINE__,__func__,nrf_error);
    APP_ERROR_CHECK(nrf_error);
  }
-
+/*****************************************************
+函数名：void advertising1_init(void)
+参数：无
+作用：广播初始化，不包括启动广播，有整个广播结构体参数
+******************************************************/
 void advertising_all_params_init(void)
 {
   ret_code_t err_code = NRF_SUCCESS;
@@ -200,7 +209,7 @@ void advertising_all_params_init(void)
   init.advdata.flags = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
   //广播数据是否再次包含设备地址
   init.advdata.include_ble_device_addr = true;
-    
+ /*     
   init.advdata.p_lesc_data = NULL;      //用于NFC,BLE advertising set NULL
   init.advdata.p_tk_value = NULL;    //用于NFC,BLE advertising set NULL
   init.advdata.p_sec_mgr_oob_flags = NULL;//用于NFC,BLE advertising set NULL
@@ -219,15 +228,15 @@ ble_advdata_service_data_t sever_data;
   init.advdata.service_data_count = 1;  //length of service data 
   init.advdata.p_slave_conn_int = NULL; //从机连接间隔范围
   init.advdata.p_manuf_specific_data = NULL;    //制造商自定义数据
- /*   */
+  */
  
  //add service 部分列表			
 // init.advdata.uuids_more_available.uuid_cnt = (sizeof(m_adv_uuids)/sizeof(m_adv_uuids[0]))-1; //包含UUID个数
 // init.advdata.uuids_more_available.p_uuids= m_adv_uuids;
 
  //完整
- init.advdata.uuids_complete.p_uuids = m_adv_uuids;
- init.advdata.uuids_complete.uuid_cnt = (sizeof(m_adv_uuids)/sizeof(m_adv_uuids[0]));
+// init.advdata.uuids_complete.p_uuids = m_adv_uuids;
+ //init.advdata.uuids_complete.uuid_cnt = (sizeof(m_adv_uuids)/sizeof(m_adv_uuids[0]));
  
  
  

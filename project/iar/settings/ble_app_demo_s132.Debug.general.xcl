@@ -8,8 +8,6 @@
 
 --device_macro="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\debugger\NordicSemi\nRF52.dmac" 
 
---flash_loader="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\flashloader\NordicSemi\nrf52832_xxaa.board" 
-
 
 
 

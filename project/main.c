@@ -76,13 +76,11 @@ static void gap_params_init(void)
 	
 	err_code = sd_ble_gap_device_name_set(&sec_mode,
 				             (const uint8_t*)DEVICE_NAME,
-					      strlen(DEVICE_NAME));
-        NRF_LOG_INFO("name size %d",sizeof(DEVICE_NAME));
-													
-	G_CHECK_ERROR_CODE_INFO(err_code);
+				      strlen(DEVICE_NAME));
+   G_CHECK_ERROR_CODE_INFO(err_code);
 													
 	err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_OUTDOOR_SPORTS_ACT_LOC_AND_NAV_POD);
-	
+	G_CHECK_ERROR_CODE_INFO(err_code);
 							
 	memset(&gap_conn_params,0,sizeof(gap_conn_params));												
 	gap_conn_params.min_conn_interval = MIN_CONN_INTERVAL;
@@ -95,7 +93,7 @@ static void gap_params_init(void)
 													
 	static ble_gap_addr_t my_addr;
 	err_code = sd_ble_gap_addr_get(&my_addr);
-	APP_ERROR_CHECK(err_code);
+	 G_CHECK_ERROR_CODE_INFO(err_code);
 /*	if(err_code == NRF_SUCCESS)
 	{
 		NRF_LOG_INFO("Address type: %02x",my_addr.addr_type);
@@ -114,23 +112,7 @@ static void gatt_init(void)
 
 
 
-NRF_BLE_QWR_DEF(m_qwr);
-static void nrf_qwr_error_handler(uint32_t nrf_error)
-{
-    APP_ERROR_HANDLER(nrf_error);
-}
 
-static void services_init(void)
-{
-	ret_code_t err_code;
-	nrf_ble_qwr_init_t qwr_init = {0};
-	
-   qwr_init.error_handler = nrf_qwr_error_handler;
-
-    err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
-  //  G_CHECK_ERROR_CODE_INFO(err_code);
-	NRF_LOG_INFO("%d",err_code);
-}	
 
 uint32_t get_rtc_counter(void)
 {
@@ -142,34 +124,31 @@ void main_log_init(void)
 {
 	//初始化log
 	ret_code_t err_code = NRF_LOG_INIT(get_rtc_counter);
-	APP_ERROR_CHECK(err_code);
+	//APP_ERROR_CHECK(err_code);
 	
 	//初始化RTT
 	NRF_LOG_DEFAULT_BACKENDS_INIT();
-	NRF_LOG_INFO("log_init success.");
+//	NRF_LOG_INFO("log_init success.");
+	G_CHECK_ERROR_CODE_INFO(err_code);
 	
 }
 void main_timer_init(void)
 {
 	ret_code_t err_code = app_timer_init();
-	APP_ERROR_CHECK(err_code);	
-	if(err_code == NRF_SUCCESS)
-		NRF_LOG_INFO("timer_init success");
-
+	G_CHECK_ERROR_CODE_INFO(err_code);
 
 	err_code = app_timer_create(&led_timer,APP_TIMER_MODE_REPEATED,led_timer_handler);
-	APP_ERROR_CHECK(err_code);
-	if(err_code == NRF_SUCCESS)
-		NRF_LOG_INFO("app timer creat success");
+	G_CHECK_ERROR_CODE_INFO(err_code);
 
 	
 	err_code = app_timer_start(led_timer,LED_TOGGLE_INTERVAL,NULL);//并不会启动RTC1
-	APP_ERROR_CHECK(err_code);
 
+	G_CHECK_ERROR_CODE_INFO(err_code);
 }
 
 void main_leds_init(void)
 {
+	
 	//配置输出
 	nrf_gpio_cfg_output(LED_RED);
 	nrf_gpio_cfg_output(LED_GREEN);
@@ -178,7 +157,7 @@ void main_leds_init(void)
 	nrf_gpio_pin_set(LED_RED);
 	//清0,LED灭
 	nrf_gpio_pin_clear(LED_GREEN);
-	NRF_LOG_INFO("leds_init success");
+//	NRF_LOG_INFO("leds_init success");
 }
 
 void main_led_off(void)
@@ -302,14 +281,16 @@ int main(void)
 	ble_stack_init();
 	gap_params_init();
 	gatt_init();
+	
 //	advertising_init();
-    //    advertising1_init();
-        advertising_all_params_init();
-	services_init();
-
+ //advertising1_init();
+   advertising_all_params_init();
+	
+	service_his_init();
+	//service_init();
 	conn_params_init();
 //	peer_manager_init();
-        advertising_start();
+    advertising_start();
 	
 	for(;;)
 	{

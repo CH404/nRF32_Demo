@@ -26,19 +26,23 @@
 #include "main.h"
 //#include "rtc.h"
 #include "advertising.h"
+#include "service.h"
+
+#include "ble_hrs.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
+#include "nrf_error.h"
 
 
 
 
-
-#define G_CHECK_ERROR_CODE_INFO(error_code)		\
-APP_ERROR_CHECK(error_code);							\
-NRF_LOG_INFO("Function: %s error code: %s.",__func__,NRF_LOG_ERROR_STRING_GET(error_code))
-
+#define G_CHECK_ERROR_CODE_INFO(error_code)    if(error_code != NRF_SUCCESS)\
+{																									\
+	NRF_LOG_INFO("Function: %s error code: %s line: %d.",__func__,NRF_LOG_ERROR_STRING_GET(error_code),__LINE__);\
+}
+	//APP_ERROR_CHECK(error_code); 
 #endif
 
 

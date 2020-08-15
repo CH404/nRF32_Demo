@@ -336,7 +336,7 @@
               <MiscControls>--c99 --reduce_paths</MiscControls>
               <Define>CONFIG_GPIO_AS_PINRESET NRF52 NRF52832_XXAA NRF_SD_BLE_API_VERSION=6 SOFTDEVICE_PRESENT SWI_DISABLE0 __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\components\libraries\atomic;..\..\components\libraries\atomic_fifo;..\..\components\libraries\atomic_flags;..\..\components\libraries\balloc;..\..\components\libraries\button;..\..\components\libraries\experimental_section_vars;..\..\components\libraries\fstorage;..\..\components\libraries\memobj;..\..\components\libraries\crc16;..\..\components\libraries\fds;..\..\components\libraries\hardfault;..\..\components\libraries\pwr_mgmt;..\..\components\libraries\ringbuf;..\..\external\fprintf;..\..\components\libraries\util;..\..\components\libraries\strerror;..\..\components\libraries\log;..\..\external\segger_rtt;..\..\components\softdevice\common;..\..\integration\nrfx\legacy;..\..\modules\nrfx\drivers\include;..\..\modules\nrfx\drivers\src\prs;..\..\external\utf_converter;..\..\components\ble\common;..\..\components\ble\nrf_ble_gatt;..\..\components\ble\ble_advertising;..\..\components\ble\nrf_ble_qwr;..\..\components\ble\peer_manager;..\..\project;..\..\modules\nrfx;..\..\integration\nrfx;..\config;..\..\modules\nrfx\mdk;..\..\components\softdevice\s132\headers;..\..\components\libraries\log\src;..\..\components\libraries\mutex;..\..\components\libraries\timer;..\..\modules\nrfx\hal;..\..\components\libraries\delay;..\..\app</IncludePath>
+              <IncludePath>..\..\components\libraries\atomic;..\..\components\libraries\atomic_fifo;..\..\components\libraries\atomic_flags;..\..\components\libraries\balloc;..\..\components\libraries\button;..\..\components\libraries\experimental_section_vars;..\..\components\libraries\fstorage;..\..\components\libraries\memobj;..\..\components\libraries\crc16;..\..\components\libraries\fds;..\..\components\libraries\hardfault;..\..\components\libraries\pwr_mgmt;..\..\components\libraries\ringbuf;..\..\external\fprintf;..\..\components\libraries\util;..\..\components\libraries\strerror;..\..\components\libraries\log;..\..\external\segger_rtt;..\..\components\softdevice\common;..\..\integration\nrfx\legacy;..\..\modules\nrfx\drivers\include;..\..\modules\nrfx\drivers\src\prs;..\..\external\utf_converter;..\..\components\ble\common;..\..\components\ble\nrf_ble_gatt;..\..\components\ble\ble_advertising;..\..\components\ble\nrf_ble_qwr;..\..\components\ble\peer_manager;..\..\project;..\..\modules\nrfx;..\..\integration\nrfx;..\config;..\..\modules\nrfx\mdk;..\..\components\softdevice\s132\headers;..\..\components\libraries\log\src;..\..\components\libraries\mutex;..\..\components\libraries\timer;..\..\modules\nrfx\hal;..\..\components\libraries\delay;..\..\app;..\..\components\ble\ble_services\ble_hrs</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -409,6 +409,11 @@
               <FileName>advertising.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\app\advertising.c</FilePath>
+            </File>
+            <File>
+              <FileName>service.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\app\service.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -579,11 +584,6 @@
               <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\libraries\strerror\nrf_strerror.c</FilePath>
-            </File>
-            <File>
-              <FileName>ble_hrs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\components\ble\ble_services\ble_hrs\ble_hrs.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -769,6 +769,16 @@
               <FileName>utf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\external\utf_converter\utf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MyServices</GroupName>
+          <Files>
+            <File>
+              <FileName>ble_hrs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\ble\ble_services\ble_hrs\ble_hrs.c</FilePath>
             </File>
           </Files>
         </Group>
