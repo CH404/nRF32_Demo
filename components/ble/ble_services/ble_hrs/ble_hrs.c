@@ -222,7 +222,7 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init)
     uint32_t              err_code;
     ble_uuid_t            ble_uuid;
     ble_add_char_params_t add_char_params;
-    uint8_t               encoded_initial_hrm[MAX_HRM_LEN];
+    uint8_t               encoded_initial_hrm[MAX_HRM_LEN];// Static maximum MTU size. 
 
     // Initialize service structure
     p_hrs->evt_handler                 = p_hrs_init->evt_handler;
@@ -233,9 +233,9 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init)
     p_hrs->max_hrm_len                 = MAX_HRM_LEN;
 
     // Add service
-    BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_HEART_RATE_SERVICE);
+    BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_HEART_RATE_SERVICE);	//get UUID 的类型 和值
 
-    err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,
+    err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,	//添加服务到属性表
                                         &ble_uuid,
                                         &p_hrs->service_handle);
 
@@ -247,20 +247,20 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init)
     // Add heart rate measurement characteristic
     memset(&add_char_params, 0, sizeof(add_char_params));
 
-    add_char_params.uuid              = BLE_UUID_HEART_RATE_MEASUREMENT_CHAR;
-    add_char_params.max_len           = MAX_HRM_LEN;
-    add_char_params.init_len          = hrm_encode(p_hrs, INITIAL_VALUE_HRM, encoded_initial_hrm);
-    add_char_params.p_init_value      = encoded_initial_hrm;
-    add_char_params.is_var_len        = true;
-    add_char_params.char_props.notify = 1;
+    add_char_params.uuid              = BLE_UUID_HEART_RATE_MEASUREMENT_CHAR;	//心率测量特征UUID
+    add_char_params.max_len           = MAX_HRM_LEN;	//特征值最大长度
+    add_char_params.init_len          = hrm_encode(p_hrs, INITIAL_VALUE_HRM, encoded_initial_hrm);//初始化长度
+    add_char_params.p_init_value      = encoded_initial_hrm;//初始化值
+    add_char_params.is_var_len        = true;	//长度可变
+    add_char_params.char_props.notify = 1;	//支持通知
     add_char_params.cccd_write_access = p_hrs_init->hrm_cccd_wr_sec;
-
+		//添加心率测量特征
     err_code = characteristic_add(p_hrs->service_handle, &add_char_params, &(p_hrs->hrm_handles));
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
-
+		//如果心率服务包含传感器位置特征，则添加位置特征
     if (p_hrs_init->p_body_sensor_location != NULL)
     {
         // Add body sensor location characteristic

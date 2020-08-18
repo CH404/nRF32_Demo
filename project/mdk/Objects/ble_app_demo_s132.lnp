@@ -4,6 +4,7 @@
 ".\objects\main.o"
 ".\objects\advertising.o"
 ".\objects\service.o"
+".\objects\hrs.o"
 ".\objects\nrf_drv_clock.o"
 ".\objects\nrf_drv_uart.o"
 ".\objects\nrfx_clock.o"
@@ -69,6 +70,7 @@
 ".\objects\security_manager.o"
 ".\objects\utf.o"
 ".\objects\ble_hrs_1.o"
+".\objects\ble_dis.o"
 --library_type=microlib --strict --scatter ".\Objects\ble_app_demo_s132.sct"
 --diag_suppress 6330 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

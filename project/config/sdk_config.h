@@ -318,7 +318,7 @@
  
 
 #ifndef BLE_DIS_ENABLED
-#define BLE_DIS_ENABLED 0
+#define BLE_DIS_ENABLED 1
 #endif
 
 // <q> BLE_GLS_ENABLED  - ble_gls - Glucose Service
@@ -339,7 +339,7 @@
  
 
 #ifndef BLE_HRS_C_ENABLED
-#define BLE_HRS_C_ENABLED 1
+#define BLE_HRS_C_ENABLED 0
 #endif
 
 // <q> BLE_HRS_ENABLED  - ble_hrs - Heart Rate Service
@@ -12000,7 +12000,7 @@
 #define NRF_SDH_BLE_GAP_EVENT_LENGTH 6
 #endif
 
-// <o> NRF_SDH_BLE_GATT_MAX_MTU_SIZE - Static maximum MTU size. 
+// <o> NRF_SDH_BLE_GATT_MAX_MTU_SIZE - Static maximum MTU size. MTU:Maximum Transmission Unit最大传输单元
 #ifndef NRF_SDH_BLE_GATT_MAX_MTU_SIZE
 #define NRF_SDH_BLE_GATT_MAX_MTU_SIZE 23
 #endif

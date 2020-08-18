@@ -67,7 +67,7 @@ void advertising_start(void)
 static ble_uuid_t m_adv_uuids[] = 
 {
  {BLE_UUID_HEART_RATE_SERVICE,BLE_UUID_TYPE_BLE},
-  {BLE_UUID_BATTERY_SERVICE,BLE_UUID_TYPE_BLE}
+  {BLE_UUID_DEVICE_INFORMATION_SERVICE,BLE_UUID_TYPE_BLE}
 };
 
 
@@ -208,7 +208,7 @@ void advertising_all_params_init(void)
   init.advdata.include_appearance = true;
   init.advdata.flags = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
   //广播数据是否再次包含设备地址
-  init.advdata.include_ble_device_addr = true;
+  init.advdata.include_ble_device_addr = false;
  /*     
   init.advdata.p_lesc_data = NULL;      //用于NFC,BLE advertising set NULL
   init.advdata.p_tk_value = NULL;    //用于NFC,BLE advertising set NULL
@@ -235,8 +235,8 @@ ble_advdata_service_data_t sever_data;
 // init.advdata.uuids_more_available.p_uuids= m_adv_uuids;
 
  //完整
-// init.advdata.uuids_complete.p_uuids = m_adv_uuids;
- //init.advdata.uuids_complete.uuid_cnt = (sizeof(m_adv_uuids)/sizeof(m_adv_uuids[0]));
+  init.advdata.uuids_complete.p_uuids = m_adv_uuids;
+  init.advdata.uuids_complete.uuid_cnt = (sizeof(m_adv_uuids)/sizeof(m_adv_uuids[0]));
  
  
  
@@ -249,9 +249,9 @@ ble_advdata_service_data_t sever_data;
 	init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;	//广播间隔
 	init.config.ble_adv_fast_timeout = APP_ADV_DURATION;	//广播持续时间,超时时间
         
-  init.config.ble_adv_slow_enabled = true;
+/*  init.config.ble_adv_slow_enabled = true;
   init.config.ble_adv_slow_interval = APP_ADV_SLOW_INTERVAL;
-  init.config.ble_adv_slow_timeout = APP_ADV_SLOW_DURATION;
+  init.config.ble_adv_slow_timeout = APP_ADV_SLOW_DURATION;*/
   
   err_code = ble_advertising_init(&m_advertising,&init);
   NRF_LOG_INFO("%d",err_code);

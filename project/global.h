@@ -22,19 +22,18 @@
 #include "nrf_ble_qwr.h"
 #include "peer_manager.h"
 #include "ble_conn_params.h"
+#include "ble_dis.h"
 
 #include "main.h"
 //#include "rtc.h"
 #include "advertising.h"
 #include "service.h"
-
-#include "ble_hrs.h"
+#include "hrs.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include "nrf_error.h"
-
 
 
 

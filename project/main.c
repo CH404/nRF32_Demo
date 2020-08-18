@@ -29,6 +29,7 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 			break;
 		case BLE_GAP_EVT_CONNECTED:
 			NRF_LOG_INFO("Connected");
+			 hrs_timer_start();
 			break;
 		case BLE_GAP_EVT_TIMEOUT:
 			NRF_LOG_INFO("Timeout");
@@ -37,8 +38,12 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 			NRF_LOG_INFO("advertising terminated");
 			main_led_off();
 			break;
+		case BLE_GATTS_EVT_HVN_TX_COMPLETE:
+				NRF_LOG_INFO("Notification transmission complete");
+			break;
 		default:
-			NRF_LOG_INFO("%d",p_ble_evt->header.evt_id);
+			
+			NRF_LOG_INFO("%d: %s: %d:",p_ble_evt->header.evt_id ,__func__,__LINE__);
 			break;
 	}
 }
@@ -79,7 +84,7 @@ static void gap_params_init(void)
 				      strlen(DEVICE_NAME));
    G_CHECK_ERROR_CODE_INFO(err_code);
 													
-	err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_OUTDOOR_SPORTS_ACT_LOC_AND_NAV_POD);
+	err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT);
 	G_CHECK_ERROR_CODE_INFO(err_code);
 							
 	memset(&gap_conn_params,0,sizeof(gap_conn_params));												
@@ -144,6 +149,9 @@ void main_timer_init(void)
 	err_code = app_timer_start(led_timer,LED_TOGGLE_INTERVAL,NULL);//并不会启动RTC1
 
 	G_CHECK_ERROR_CODE_INFO(err_code);
+
+	hrs_timer_create();
+	
 }
 
 void main_leds_init(void)
@@ -286,11 +294,11 @@ int main(void)
  //advertising1_init();
    advertising_all_params_init();
 	
+	service_init();
 	service_his_init();
-	//service_init();
 	conn_params_init();
 //	peer_manager_init();
-    advertising_start();
+   advertising_start();
 	
 	for(;;)
 	{

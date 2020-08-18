@@ -13,7 +13,7 @@
 #define APP_ADV_SLOW_INTERVAL                                    500 //0.625 * 500 = 312.5ms                                  
 #define APP_ADV_SLOW_DURATION                                    12000;   //1 mim   
 
-#define APP_ADV_DURATION					6000							//   单位10ms
+#define APP_ADV_DURATION					0							//   单位10ms
 #define APP_ADV_INTERVAL					300	//The advertising interval (in units of 0.625 ms. This value corresponds to 187.5 ms)
 #define DEVICE_NAME					    	"RED_MI"
 

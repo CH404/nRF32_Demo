@@ -11,7 +11,7 @@
 SERVICE_EXT void service_init(void);
 SERVICE_EXT void service_his_init(void);
 
-
+SERVICE_EXT void service_dis_init(void);
 
 #endif
 
