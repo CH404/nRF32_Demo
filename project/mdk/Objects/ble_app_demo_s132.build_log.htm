@@ -22,16 +22,28 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\mdk\ble_app_demo_s132.uvprojx
-Project File Date:  08/17/2020
+Project File Date:  08/21/2020
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling hrs.c...
-linking...
-Program Size: Code=43800 RO-data=6784 RW-data=436 ZI-data=13452  
-FromELF: creating hex file...
-".\Objects\ble_app_demo_s132.axf" - 0 Error(s), 0 Warning(s).
+compiling nus.c...
+..\..\app\nus.c(32): error:  #20: identifier "p_data" is undefined
+  	memset(&ble_data_buff,p_data,sizeof(uint8_t)*data_length);
+..\..\app\nus.c(174): error:  #20: identifier "p_queue_mgr" is undefined
+  	queue_init(&p_queue_mgr,data_buff,BLE_UARTS_BUFF_MAX);
+..\..\app\nus.c(176): error:  #65: expected a ";"
+  }
+..\..\app\nus.c(196): error:  #167: argument of type "queue_manager" is incompatible with parameter of type "queue_manager *"
+  		if(queue_push(queue_mgr,data) == QUEUE_SUCCESS)
+..\..\app\nus.c(191): warning:  #177-D: variable "cnt"  was declared but never referenced
+  	static uint8_t cnt = 0;
+..\..\app\nus.c(204): error:  #20: identifier "MAX" is undefined
+  	uint8_t buff[MAX]= {0};
+..\..\app\nus.c(205): error:  #20: identifier "uart_TX_false" is undefined
+  	uart_TX_false = false;
+..\..\app\nus.c: 1 warning, 6 errors
+".\Objects\ble_app_demo_s132.axf" - 6 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -45,7 +57,8 @@ Package Vendor: NordicSemiconductor
   C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_DeviceFamilyPack\8.9.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:04
+Target not created.
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

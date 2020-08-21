@@ -1,7 +1,7 @@
 #ifndef __GLOBAL_H
 #define __GLOBAL_H
 
-
+#define MY_QUEUE_ENABLE 1
 
 #include "nrf_strerror.h"
 
@@ -28,18 +28,20 @@
 //#include "rtc.h"
 #include "advertising.h"
 #include "service.h"
-#include "hrs.h"
+//#include "hrs.h"
+#include "nus.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include "nrf_error.h"
 
+#include "my_queue.h"
 
 
-#define G_CHECK_ERROR_CODE_INFO(error_code)    if(error_code != NRF_SUCCESS)\
+#define G_CHECK_ERROR_CODE_INFO(err_code)    if(err_code != NRF_SUCCESS)\
 {																									\
-	NRF_LOG_INFO("Function: %s error code: %s line: %d.",__func__,NRF_LOG_ERROR_STRING_GET(error_code),__LINE__);\
+	NRF_LOG_INFO("Function: %s error code: %s line: %d.",__func__,NRF_LOG_ERROR_STRING_GET(err_code),__LINE__);\
 }
 	//APP_ERROR_CHECK(error_code); 
 #endif

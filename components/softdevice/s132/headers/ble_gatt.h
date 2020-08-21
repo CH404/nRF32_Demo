@@ -202,13 +202,13 @@ typedef struct
 typedef struct
 {
   /* Standard properties */
-  uint8_t broadcast       :1; /**< Broadcasting of the value permitted. */
-  uint8_t read            :1; /**< Reading the value permitted. */
-  uint8_t write_wo_resp   :1; /**< Writing the value with Write Command permitted. */
-  uint8_t write           :1; /**< Writing the value with Write Request permitted. */
-  uint8_t notify          :1; /**< Notification of the value permitted. */
-  uint8_t indicate        :1; /**< Indications of the value permitted. */
-  uint8_t auth_signed_wr  :1; /**< Writing the value with Signed Write Command permitted. */
+  uint8_t broadcast       :1; /**< Broadcasting of the value permitted. */ /**< 是否允许广播 */
+  uint8_t read            :1; /**< Reading the value permitted. *//**< 是否允许读操作 */
+  uint8_t write_wo_resp   :1; /**< Writing the value with Write Command permitted. *//**< 是否允许命令写修改操作 */
+  uint8_t write           :1; /**< Writing the value with Write Request permitted. *//**< 是否允许请求写修改操作*/
+  uint8_t notify          :1; /**< Notification of the value permitted. *//**< 是否允许通知修改 */
+  uint8_t indicate        :1; /**< Indications of the value permitted. */ /**< 是否允许指示修改 */
+  uint8_t auth_signed_wr  :1; /**< Writing the value with Signed Write Command permitted. *//**< 是否允许签名写命令写入*/
 } ble_gatt_char_props_t;
 
 /**@brief GATT Characteristic Extended Properties. */

@@ -4,12 +4,26 @@
 
 APP_TIMER_DEF(led_timer);
 NRF_BLE_GATT_DEF(m_gatt);//定义gatt模块实例
+static uint16_t   m_conn_handle          = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
+static uint16_t   m_ble_nus_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - 3;            /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
 static void led_timer_handler(void *p_context)
 {
 	
 		UNUSED_PARAMETER(p_context);	//不使用p_context,不要报警
 		nrf_gpio_pin_toggle(LED_RED);
 		//NRF_LOG_INFO("LED_toggle.");
+}
+/**@brief Function for handling events from the GATT library. */
+void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt)
+{
+    if ((m_conn_handle == p_evt->conn_handle) && (p_evt->evt_id == NRF_BLE_GATT_EVT_ATT_MTU_UPDATED))
+    {
+        m_ble_nus_max_data_len = p_evt->params.att_mtu_effective - OPCODE_LENGTH - HANDLE_LENGTH;
+        NRF_LOG_INFO("Data len is set to 0x%X(%d)", m_ble_nus_max_data_len, m_ble_nus_max_data_len);
+    }
+    NRF_LOG_DEBUG("ATT MTU exchange completed. central 0x%x peripheral 0x%x",
+                  p_gatt->att_mtu_desired_central,
+                  p_gatt->att_mtu_desired_periph);
 }
 
 static void power_management_init(void)
@@ -29,7 +43,7 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 			break;
 		case BLE_GAP_EVT_CONNECTED:
 			NRF_LOG_INFO("Connected");
-			 hrs_timer_start();
+			// hrs_timer_start();
 			break;
 		case BLE_GAP_EVT_TIMEOUT:
 			NRF_LOG_INFO("Timeout");
@@ -84,8 +98,8 @@ static void gap_params_init(void)
 				      strlen(DEVICE_NAME));
    G_CHECK_ERROR_CODE_INFO(err_code);
 													
-	err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT);
-	G_CHECK_ERROR_CODE_INFO(err_code);
+//	err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT);
+//	G_CHECK_ERROR_CODE_INFO(err_code);
 							
 	memset(&gap_conn_params,0,sizeof(gap_conn_params));												
 	gap_conn_params.min_conn_interval = MIN_CONN_INTERVAL;
@@ -96,9 +110,9 @@ static void gap_params_init(void)
 	err_code = sd_ble_gap_ppcp_set(&gap_conn_params);		
 	G_CHECK_ERROR_CODE_INFO(err_code);
 													
-	static ble_gap_addr_t my_addr;
-	err_code = sd_ble_gap_addr_get(&my_addr);
-	 G_CHECK_ERROR_CODE_INFO(err_code);
+//	static ble_gap_addr_t my_addr;
+//	err_code = sd_ble_gap_addr_get(&my_addr);
+	// G_CHECK_ERROR_CODE_INFO(err_code);
 /*	if(err_code == NRF_SUCCESS)
 	{
 		NRF_LOG_INFO("Address type: %02x",my_addr.addr_type);
@@ -111,8 +125,10 @@ static void gap_params_init(void)
 
 static void gatt_init(void)
 {
-    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
+    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, gatt_evt_handler);
     G_CHECK_ERROR_CODE_INFO(err_code);
+	err_code = nrf_ble_gatt_att_mtu_periph_set(&m_gatt, NRF_SDH_BLE_GATT_MAX_MTU_SIZE);
+	 G_CHECK_ERROR_CODE_INFO(err_code);
 }
 
 
@@ -150,7 +166,7 @@ void main_timer_init(void)
 
 	G_CHECK_ERROR_CODE_INFO(err_code);
 
-	hrs_timer_create();
+	//hrs_timer_create();
 	
 }
 
@@ -188,7 +204,7 @@ void main_lfclk_config(void)
 	
 }
 //连接参数更新事件
-static uint16_t m_conn_handle = BLE_CONN_HANDLE_INVALID;                        /**< Handle of the current connection. */
+//static uint16_t m_conn_handle = BLE_CONN_HANDLE_INVALID;                        /**< Handle of the current connection. */
 static void on_conn_params_evt(ble_conn_params_evt_t * p_evt)
 {
     ret_code_t err_code;
@@ -289,13 +305,12 @@ int main(void)
 	ble_stack_init();
 	gap_params_init();
 	gatt_init();
-	
+	service_init();
 //	advertising_init();
  //advertising1_init();
    advertising_all_params_init();
 	
-	service_init();
-	service_his_init();
+//	service_his_init();
 	conn_params_init();
 //	peer_manager_init();
    advertising_start();
@@ -305,6 +320,7 @@ int main(void)
 	//	NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());
 	//	app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
 		//app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
+
 		idle_state_handle();
 	}
 }

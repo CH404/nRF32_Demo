@@ -235,8 +235,8 @@ ble_advdata_service_data_t sever_data;
 // init.advdata.uuids_more_available.p_uuids= m_adv_uuids;
 
  //ÍêÕû
-  init.advdata.uuids_complete.p_uuids = m_adv_uuids;
-  init.advdata.uuids_complete.uuid_cnt = (sizeof(m_adv_uuids)/sizeof(m_adv_uuids[0]));
+//  init.advdata.uuids_complete.p_uuids = m_adv_uuids;
+ // init.advdata.uuids_complete.uuid_cnt = (sizeof(m_adv_uuids)/sizeof(m_adv_uuids[0]));
  
  
  
@@ -254,7 +254,6 @@ ble_advdata_service_data_t sever_data;
   init.config.ble_adv_slow_timeout = APP_ADV_SLOW_DURATION;*/
   
   err_code = ble_advertising_init(&m_advertising,&init);
-  NRF_LOG_INFO("%d",err_code);
   G_CHECK_ERROR_CODE_INFO(err_code);
 
   ble_advertising_conn_cfg_tag_set(&m_advertising,APP_BLE_CONN_CFG_TAG);

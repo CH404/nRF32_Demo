@@ -266,6 +266,7 @@ uint32_t ble_nus_init(ble_nus_t * p_nus, ble_nus_init_t const * p_nus_init)
     ble_uuid.type = p_nus->uuid_type;
     ble_uuid.uuid = BLE_UUID_NUS_SERVICE;
 
+
     // Add the service.
     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,
                                         &ble_uuid,

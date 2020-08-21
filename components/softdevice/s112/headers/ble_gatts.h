@@ -214,27 +214,27 @@ typedef struct
 /**@brief Attribute metadata. */
 typedef struct
 {
-  ble_gap_conn_sec_mode_t read_perm;       /**< Read permissions. */
-  ble_gap_conn_sec_mode_t write_perm;      /**< Write permissions. */
-  uint8_t                 vlen       :1;   /**< Variable length attribute. */
-  uint8_t                 vloc       :2;   /**< Value location, see @ref BLE_GATTS_VLOCS.*/
-  uint8_t                 rd_auth    :1;   /**< Read authorization and value will be requested from the application on every read operation. */
-  uint8_t                 wr_auth    :1;   /**< Write authorization will be requested from the application on every Write Request operation (but not Write Command). */
+  ble_gap_conn_sec_mode_t read_perm;       /**< Read permissions. */ /*读权限*/
+  ble_gap_conn_sec_mode_t write_perm;      /**< Write permissions. *//*写权限*/
+  uint8_t                 vlen       :1;   /**< Variable length attribute. *//*可变长度*/
+  uint8_t                 vloc       :2;   /**< Value location, see @ref BLE_GATTS_VLOCS.*//*值存放的位置*/
+  uint8_t                 rd_auth    :1;   /**< Read authorization and value will be requested from the application on every read operation. */ /*读许可，该值会在每次读操作后向应用重新发起请求*/
+  uint8_t                 wr_auth    :1;   /**< Write authorization will be requested from the application on every Write Request operation (but not Write Command). */ /**< 写许可会在每次读操作后向应用重新发起请求(但不写命令). */
 } ble_gatts_attr_md_t;
 
 
 /**@brief GATT Attribute. */
 typedef struct
 {
-  ble_uuid_t const          *p_uuid;        /**< Pointer to the attribute UUID. */
-  ble_gatts_attr_md_t const *p_attr_md;     /**< Pointer to the attribute metadata structure. */
-  uint16_t                   init_len;      /**< Initial attribute value length in bytes. */
-  uint16_t                   init_offs;     /**< Initial attribute value offset in bytes. If different from zero, the first init_offs bytes of the attribute value will be left uninitialized. */
-  uint16_t                   max_len;       /**< Maximum attribute value length in bytes, see @ref BLE_GATTS_ATTR_LENS_MAX for maximum values. */
+  ble_uuid_t const          *p_uuid;        /**< Pointer to the attribute UUID. */	 /**< 指向属性的UUID */
+  ble_gatts_attr_md_t const *p_attr_md;     /**< Pointer to the attribute metadata structure. *///元数据结构体
+  uint16_t                   init_len;      /**< Initial attribute value length in bytes. */ /**< 初始化属性长度 */
+  uint16_t                   init_offs;     /**< Initial attribute value offset in bytes. If different from zero, the first init_offs bytes of the attribute value will be left uninitialized. */   /**< 初始化属性偏移 */
+  uint16_t                   max_len;       /**< Maximum attribute value length in bytes, see @ref BLE_GATTS_ATTR_LENS_MAX for maximum values. */ /**< 最大属性长度,参照BLE_GATTS_ATTR_LENS_MAX*/
   uint8_t                   *p_value;       /**< Pointer to the attribute data. Please note that if the @ref BLE_GATTS_VLOC_USER value location is selected in the attribute metadata, this will have to point to a buffer
                                                  that remains valid through the lifetime of the attribute. This excludes usage of automatic variables that may go out of scope or any other temporary location.
                                                  The stack may access that memory directly without the application's knowledge. For writable characteristics, this value must not be a location in flash memory.*/
-} ble_gatts_attr_t;
+} ble_gatts_attr_t;								  /**< 指向属性数据。请注意如果 BLE_GATTS_VLOC_USER值的位置被选在attribute metadata结构体中,则需指向有效生命周期缓冲区。协议栈可能在没有得到应用程序许可的情况下直接操作 */
 
 /**@brief GATT Attribute Value. */
 typedef struct
@@ -250,36 +250,36 @@ typedef struct
 /**@brief GATT Characteristic Presentation Format. */
 typedef struct
 {
-  uint8_t          format;      /**< Format of the value, see @ref BLE_GATT_CPF_FORMATS. */
-  int8_t           exponent;    /**< Exponent for integer data types. */
-  uint16_t         unit;        /**< Unit from Bluetooth Assigned Numbers. */
-  uint8_t          name_space;  /**< Namespace from Bluetooth Assigned Numbers, see @ref BLE_GATT_CPF_NAMESPACES. */
-  uint16_t         desc;        /**< Namespace description from Bluetooth Assigned Numbers, see @ref BLE_GATT_CPF_NAMESPACES. */
+  uint8_t          format;      /**< Format of the value, see @ref BLE_GATT_CPF_FORMATS. */ /**< 值的格式，参照BLE_GATT_CPF_FORMATS. */
+  int8_t           exponent;    /**< Exponent for integer data types. */ /**< 整数类型的指数 */
+  uint16_t         unit;        /**< Unit from Bluetooth Assigned Numbers. */ /**< 蓝牙中分配的UUID*/
+  uint8_t          name_space;  /**< Namespace from Bluetooth Assigned Numbers, see @ref BLE_GATT_CPF_NAMESPACES. */ /**< 从蓝牙分配的命名空间，参见BLE_GATT_CPF_NAMESPACES.*/
+  uint16_t         desc;        /**< Namespace description from Bluetooth Assigned Numbers, see @ref BLE_GATT_CPF_NAMESPACES. */ /**< 从蓝牙分配的命名空间描述，参见BLE_GATT_CPF_NAMESPACES.*/
 } ble_gatts_char_pf_t;
 
 
 /**@brief GATT Characteristic metadata. */
 typedef struct
 {
-  ble_gatt_char_props_t       char_props;               /**< Characteristic Properties. */
-  ble_gatt_char_ext_props_t   char_ext_props;           /**< Characteristic Extended Properties. */
-  uint8_t const              *p_char_user_desc;         /**< Pointer to a UTF-8 encoded string (non-NULL terminated), NULL if the descriptor is not required. */
-  uint16_t                    char_user_desc_max_size;  /**< The maximum size in bytes of the user description descriptor. */
-  uint16_t                    char_user_desc_size;      /**< The size of the user description, must be smaller or equal to char_user_desc_max_size. */
-  ble_gatts_char_pf_t const  *p_char_pf;                /**< Pointer to a presentation format structure or NULL if the CPF descriptor is not required. */
-  ble_gatts_attr_md_t const  *p_user_desc_md;           /**< Attribute metadata for the User Description descriptor, or NULL for default values. */
-  ble_gatts_attr_md_t const  *p_cccd_md;                /**< Attribute metadata for the Client Characteristic Configuration Descriptor, or NULL for default values. */
-  ble_gatts_attr_md_t const  *p_sccd_md;                /**< Attribute metadata for the Server Characteristic Configuration Descriptor, or NULL for default values. */
+  ble_gatt_char_props_t       char_props;               /**< Characteristic Properties. */ /**< 特性性质 */
+  ble_gatt_char_ext_props_t   char_ext_props;           /**< Characteristic Extended Properties. */ /**< 特性拓展性质 */
+  uint8_t const              *p_char_user_desc;         /**< Pointer to a UTF-8 encoded string (non-NULL terminated), NULL if the descriptor is not required. */ /**< 指向UTF-8, NULL则无要求 */
+  uint16_t                    char_user_desc_max_size;  /**< The maximum size in bytes of the user description descriptor. *//**< 用户描述符的最大字节长 */
+  uint16_t                    char_user_desc_size;      /**< The size of the user description, must be smaller or equal to char_user_desc_max_size. */  /**< 用户描述字节, 必须小于等于char_user_desc_max_size */ 
+  ble_gatts_char_pf_t const  *p_char_pf;                /**< Pointer to a presentation format structure or NULL if the CPF descriptor is not required. *//**< 指向现存的结构体格式，NULL则对描述符不做要求 */
+  ble_gatts_attr_md_t const  *p_user_desc_md;           /**< Attribute metadata for the User Description descriptor, or NULL for default values. */ /**< 用户描述符的Attribute元数据,NULL为默认值 */
+  ble_gatts_attr_md_t const  *p_cccd_md;                /**< Attribute metadata for the Client Characteristic Configuration Descriptor, or NULL for default values. *//**< cccd的Attribute元数据，NULL为默认值 */
+  ble_gatts_attr_md_t const  *p_sccd_md;                /**< Attribute metadata for the Server Characteristic Configuration Descriptor, or NULL for default values. *//**< sccd的Attribute元数据，NULL为默认值  */
 } ble_gatts_char_md_t;
 
 
 /**@brief GATT Characteristic Definition Handles. */
 typedef struct
-{
-  uint16_t          value_handle;       /**< Handle to the characteristic value. */
-  uint16_t          user_desc_handle;   /**< Handle to the User Description descriptor, or @ref BLE_GATT_HANDLE_INVALID if not present. */
-  uint16_t          cccd_handle;        /**< Handle to the Client Characteristic Configuration Descriptor, or @ref BLE_GATT_HANDLE_INVALID if not present. */
-  uint16_t          sccd_handle;        /**< Handle to the Server Characteristic Configuration Descriptor, or @ref BLE_GATT_HANDLE_INVALID if not present. */
+{ 
+  uint16_t          value_handle;       /**< Handle to the characteristic value. *//**< 处理特征值句柄 */
+  uint16_t          user_desc_handle;   /**< Handle to the User Description descriptor, or @ref BLE_GATT_HANDLE_INVALID if not present. *//**< 处理用户描述符的句柄,BLE_GATT_HANDLE_INVALID为不存在 */
+  uint16_t          cccd_handle;        /**< Handle to the Client Characteristic Configuration Descriptor, or @ref BLE_GATT_HANDLE_INVALID if not present. */ /**< 处理CCCD的句柄,BLE_GATT_HANDLE_INVALID 为不存在*/
+  uint16_t          sccd_handle;        /**< Handle to the Server Characteristic Configuration Descriptor, or @ref BLE_GATT_HANDLE_INVALID if not present. *//**< 处理SCCD的句柄,BLE_GATT_HANDLE_INVALID 为不存在. */
 } ble_gatts_char_handles_t;
 
 
