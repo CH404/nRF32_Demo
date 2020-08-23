@@ -36,9 +36,9 @@
 #include "nrf_log_default_backends.h"
 #include "nrf_error.h"
 
-#include "my_queue.h"
+//#include "my_queue.h"
 
-
+#define MY_QUEUE_ENABLE 1
 #define G_CHECK_ERROR_CODE_INFO(err_code)    if(err_code != NRF_SUCCESS)\
 {																									\
 	NRF_LOG_INFO("Function: %s error code: %s line: %d.",__func__,NRF_LOG_ERROR_STRING_GET(err_code),__LINE__);\

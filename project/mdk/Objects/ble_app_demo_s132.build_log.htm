@@ -3,61 +3,44 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: ¦ÌVision V5.24.2.0
+IDE-Version: ¦ÌVision V5.23.0.0
 Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 007 RD, 007, LIC=HF8WF-69BR9-XBQEC-7MPLV-IVFYQ-TU10A
+License Information: chs chs, chs, LIC=8MZI6-DAQ97-24HSS-L5LXD-KSD4F-01YIA
  
 Tool Versions:
-Toolchain:       MDK-ARM Professional  Version: 5.24.1
-Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 5 (build 528)
-Assembler:       Armasm.exe V5.06 update 5 (build 528)
-Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
-Library Manager: ArmAr.exe V5.06 update 5 (build 528)
-Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
-CPU DLL:         SARMCM3.DLL V5.24.1
-Dialog DLL:      DCM.DLL V1.16.0.0
-Target DLL:      Segger\JL2CM3.dll V2.99.26.0
-Dialog DLL:      TCM.DLL V1.32.0.0
+Toolchain:       MDK-ARM Professional  Version: 5.23
+Toolchain Path:  D:\Software\keil5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.23
+Dialog DLL:      DARMCM1.DLL V1.17.0.0
+Target DLL:      Segger\JL2CM3.dll V2.99.23.0
+Dialog DLL:      TARMCM1.DLL V1.12.0.0
  
 <h2>Project:</h2>
-E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\mdk\ble_app_demo_s132.uvprojx
-Project File Date:  08/21/2020
+D:\Data\52832\demo\nRF32_Demo\project\mdk\ble_app_demo_s132.uvprojx
+Project File Date:  08/23/2020
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'D:\Software\keil5\ARM\ARMCC\Bin'
 Build target 'Target 1'
 compiling nus.c...
-..\..\app\nus.c(32): error:  #20: identifier "p_data" is undefined
-  	memset(&ble_data_buff,p_data,sizeof(uint8_t)*data_length);
-..\..\app\nus.c(174): error:  #20: identifier "p_queue_mgr" is undefined
-  	queue_init(&p_queue_mgr,data_buff,BLE_UARTS_BUFF_MAX);
-..\..\app\nus.c(176): error:  #65: expected a ";"
-  }
-..\..\app\nus.c(196): error:  #167: argument of type "queue_manager" is incompatible with parameter of type "queue_manager *"
-  		if(queue_push(queue_mgr,data) == QUEUE_SUCCESS)
-..\..\app\nus.c(191): warning:  #177-D: variable "cnt"  was declared but never referenced
-  	static uint8_t cnt = 0;
-..\..\app\nus.c(204): error:  #20: identifier "MAX" is undefined
-  	uint8_t buff[MAX]= {0};
-..\..\app\nus.c(205): error:  #20: identifier "uart_TX_false" is undefined
-  	uart_TX_false = false;
-..\..\app\nus.c: 1 warning, 6 errors
-".\Objects\ble_app_demo_s132.axf" - 6 Error(s), 1 Warning(s).
-
-<h2>Software Packages used:</h2>
-
-Package Vendor: NordicSemiconductor
-                http://developer.nordicsemi.com/nRF5_SDK/pieces/nRF_DeviceFamilyPack/NordicSemiconductor.nRF_DeviceFamilyPack.8.9.0.pack
-                NordicSemiconductor.nRF_DeviceFamilyPack.8.9.0
-                Nordic Semiconductor nRF ARM devices Device Family Pack.
+..\..\app\nus.c(309): warning:  #177-D: variable "uarts_rx_buff"  was declared but never referenced
+  	uint8_t uarts_rx_buff[BLE_UARTS_BUFF_MAX];
+..\..\app\nus.c: 1 warning, 0 errors
+linking...
+Program Size: Code=47748 RO-data=6988 RW-data=364 ZI-data=14036  
+FromELF: creating hex file...
+".\Objects\ble_app_demo_s132.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   .\RTE\_Target_1
-  C:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_DeviceFamilyPack\8.9.0\Device\Include
+  D:\Software\keil5\NordicSemiconductor\nRF_DeviceFamilyPack\8.9.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Target not created.
 Build Time Elapsed:  00:00:02
 </pre>
 </body>

@@ -2,7 +2,7 @@
 #include "global.h"
 
 
-BLE_UARTS_DEF(m_uarts);
+
 
 NRF_BLE_QWR_DEF(m_qwr);
 static void nrf_qwr_error_handler(uint32_t nrf_error)
@@ -27,9 +27,7 @@ void service_init(void)
 //	NRF_LOG_INFO("%d",err_code);
 	G_CHECK_ERROR_CODE_INFO(err_code);
 //	service_dis_init();
-	service_uarts_init(&m_uarts);
-	uart_init();
-
+	service_uarts_init();
 }
 
 #define MANUFANCTURER_NAME "IIII"

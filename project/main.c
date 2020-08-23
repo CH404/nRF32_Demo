@@ -55,9 +55,23 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 		case BLE_GATTS_EVT_HVN_TX_COMPLETE:
 				NRF_LOG_INFO("Notification transmission complete");
 			break;
-		default:
-			
-			NRF_LOG_INFO("%d: %s: %d:",p_ble_evt->header.evt_id ,__func__,__LINE__);
+		case BLE_GAP_EVT_RSSI_CHANGED:
+			NRF_LOG_INFO("RSSI report");
+			break;
+		case BLE_GAP_EVT_CONN_PARAM_UPDATE:
+			NRF_LOG_INFO("connent params update");
+			break;
+		case BLE_GATTC_EVT_DESC_DISC_RSP:
+			NRF_LOG_INFO("Descriptor Discovery Response event.");
+			break;
+		case BLE_GATTC_EVT_TIMEOUT:
+			NRF_LOG_INFO("gattc event timmeout");
+			break;
+		case BLE_GATTC_EVT_EXCHANGE_MTU_RSP:
+			NRF_LOG_INFO("Exchange MTU Response event");
+		break;
+		default:			
+		NRF_LOG_INFO("func:%s id:%d: line:%d",__func__,p_ble_evt->header.evt_id ,__LINE__);
 			break;
 	}
 }
@@ -127,6 +141,7 @@ static void gatt_init(void)
 {
     ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, gatt_evt_handler);
     G_CHECK_ERROR_CODE_INFO(err_code);
+	//设置MTU大小，Maximum Transmission Unit 最大传输单元
 	err_code = nrf_ble_gatt_att_mtu_periph_set(&m_gatt, NRF_SDH_BLE_GATT_MAX_MTU_SIZE);
 	 G_CHECK_ERROR_CODE_INFO(err_code);
 }
@@ -320,6 +335,7 @@ int main(void)
 	//	NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());
 	//	app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
 		//app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
+	data_transmit();
 
 		idle_state_handle();
 	}
