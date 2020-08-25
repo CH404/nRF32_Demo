@@ -6425,7 +6425,7 @@
 // <i> Therefore, the minimum is two virtual pages: one page to store data and one page to be used by the system for garbage collection.
 // <i> The total amount of flash memory that is used by FDS amounts to @ref FDS_VIRTUAL_PAGES * @ref FDS_VIRTUAL_PAGE_SIZE * 4 bytes.
 
-#ifndef FDS_VIRTUAL_PAGES
+#ifndef FDS_VIRTUAL_PAGES			//虚拟页数	FDS使用FLASH大小取决于这个值和FDS_VIRTUAL_PAGE_SIZE
 #define FDS_VIRTUAL_PAGES 3
 #endif
 
@@ -6438,7 +6438,7 @@
 // <1024=> 1024 
 // <2048=> 2048 
 
-#ifndef FDS_VIRTUAL_PAGE_SIZE
+#ifndef FDS_VIRTUAL_PAGE_SIZE		//虚拟页大小,（1024个字，4K字节，与物理flash一样大）,加大可存储大于物理页的数据
 #define FDS_VIRTUAL_PAGE_SIZE 1024
 #endif
 
@@ -6458,7 +6458,7 @@
 // <2=> NRF_FSTORAGE_SD 
 
 #ifndef FDS_BACKEND
-#define FDS_BACKEND 2
+#define FDS_BACKEND 2	//fds 使用的后端接口
 #endif
 
 // </h> 
@@ -6470,7 +6470,7 @@
 // <o> FDS_OP_QUEUE_SIZE - Size of the internal queue. 
 // <i> Increase this value if you frequently get synchronous FDS_ERR_NO_SPACE_IN_QUEUES errors.
 
-#ifndef FDS_OP_QUEUE_SIZE
+#ifndef FDS_OP_QUEUE_SIZE		//写入数据队列大小
 #define FDS_OP_QUEUE_SIZE 4
 #endif
 

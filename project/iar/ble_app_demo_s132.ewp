@@ -399,7 +399,9 @@
                     <state>$PROJ_DIR$\..\..\components\libraries\sensorsim</state>
                     <state>$PROJ_DIR$\..\..\app</state>
                     <state>$PROJ_DIR$\..</state>
-                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\components\ble\ble_services\ble_hrs</state>
+                    <state>$PROJ_DIR$\..\..\components\ble\ble_services\ble_hrs</state>
+                    <state>$PROJ_DIR$\..\..\components\ble\ble_services\ble_dis</state>
+                    <state>$PROJ_DIR$\..\..\m_libraries</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2131,10 +2133,19 @@
             <name>$PROJ_DIR$\..\..\app\advertising.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\app\flasg_data_storage.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\app\flash_storage.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\main.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\config\sdk_config.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\app\service.c</name>
         </file>
     </group>
     <group>
@@ -2144,6 +2155,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\modules\nrfx\mdk\system_nrf52.c</name>
+        </file>
+    </group>
+    <group>
+        <name>m_Libraries</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\m_libraries\my_queue.c</name>
         </file>
     </group>
     <group>
@@ -2281,10 +2298,16 @@
             <name>$PROJ_DIR$\..\..\components\libraries\fstorage\nrf_fstorage.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\components\libraries\fstorage\nrf_fstorage_nvmc.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\components\libraries\fstorage\nrf_fstorage_sd.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\libraries\memobj\nrf_memobj.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\modules\nrfx\hal\nrf_nvmc.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\libraries\pwr_mgmt\nrf_pwr_mgmt.c</name>

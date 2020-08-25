@@ -37,7 +37,7 @@
 #include "nrf_error.h"
 
 #include "my_queue.h"
-
+#include "flash_storage.h"
 
 #define G_CHECK_ERROR_CODE_INFO(err_code)    if(err_code != NRF_SUCCESS)\
 {																									\

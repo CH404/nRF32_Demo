@@ -2,8 +2,6 @@
 #include "global.h"
 
 
-BLE_UARTS_DEF(m_uarts);
-
 NRF_BLE_QWR_DEF(m_qwr);
 static void nrf_qwr_error_handler(uint32_t nrf_error)
 {
@@ -18,20 +16,17 @@ static void nrf_qwr_error_handler(uint32_t nrf_error)
 void service_init(void)
 {
    ret_code_t err_code;
-	nrf_ble_qwr_init_t qwr_init = {0};
+   nrf_ble_qwr_init_t qwr_init = {0};
 	
    qwr_init.error_handler = nrf_qwr_error_handler;
 
     err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
-  //  G_CHECK_ERROR_CODE_INFO(err_code);
-//	NRF_LOG_INFO("%d",err_code);
+
 	G_CHECK_ERROR_CODE_INFO(err_code);
-//	service_dis_init();
-	service_uarts_init(&m_uarts);
-	uart_init();
+
 
 }
-
+#if BLE_DIS_ENABLED
 #define MANUFANCTURER_NAME "IIII"
 void service_dis_init(void)
 {
@@ -41,12 +36,11 @@ void service_dis_init(void)
 	ble_srv_ascii_to_utf8(&dis_init.manufact_name_str,(char*)MANUFANCTURER_NAME);
 	
 	dis_init.dis_char_rd_sec = SEC_OPEN;
-//	ret_code_t err_code = ble_dis_init(&dis_init);
+	ret_code_t err_code = ble_dis_init(&dis_init);
 	
-//	G_CHECK_ERROR_CODE_INFO(err_code);
 }
 
-
+#endif
 
 
 

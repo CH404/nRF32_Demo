@@ -416,9 +416,9 @@
               <FilePath>..\..\app\service.c</FilePath>
             </File>
             <File>
-              <FileName>nus.c</FileName>
+              <FileName>flash_storage.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\app\nus.c</FilePath>
+              <FilePath>..\..\app\flash_storage.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -599,6 +599,16 @@
               <FileName>app_fifo.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\libraries\fifo\app_fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_nvmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\modules\nrfx\hal\nrf_nvmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_fstorage_nvmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\libraries\fstorage\nrf_fstorage_nvmc.c</FilePath>
             </File>
           </Files>
         </Group>

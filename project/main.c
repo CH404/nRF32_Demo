@@ -1,7 +1,7 @@
 
 #define MAIN_GLOBAL
 #include "global.h"
-
+#include "nrf_delay.h"
 APP_TIMER_DEF(led_timer);
 NRF_BLE_GATT_DEF(m_gatt);//定义gatt模块实例
 static uint16_t   m_conn_handle          = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
@@ -297,31 +297,46 @@ static void idle_state_handle(void)
 }
 int main(void)
 {
+	ret_code_t err_code;
+	uint8_t write_data_buff[256] = {0x00,0xAA,0x55,0x23,0x88,0x77,0x99,0x56};
+	uint8_t read_data_buff[256] = {0};
 	main_log_init();
 	main_leds_init();
 //	main_lfclk_config();
 	main_timer_init();
-	power_management_init();
+ 
+	//power_management_init();
 	ble_stack_init();
-	gap_params_init();
-	gatt_init();
-	service_init();
+//	gap_params_init();
+	//gatt_init();
+	//service_init();
 //	advertising_init();
  //advertising1_init();
-   advertising_all_params_init();
+  // advertising_all_params_init();
 	
 //	service_his_init();
-	conn_params_init();
+//	conn_params_init();
 //	peer_manager_init();
-   advertising_start();
-	
+  // advertising_start();
+	flash_storage_init();
+	nrf_delay_ms(1000);
+	err_code = flash_storage_write(NULL,0x3e000,&write_data_buff,4,NULL);
+	G_CHECK_ERROR_CODE_INFO(err_code);
+	err_code = flash_storage_read(NULL,0x3e000, &read_data_buff,6);
+	G_CHECK_ERROR_CODE_INFO(err_code);
+	nrf_delay_ms(1000);
+	err_code = flash_storage_erase(NULL,0x3e000,1,NULL);
+	G_CHECK_ERROR_CODE_INFO(err_code);
+	nrf_delay_ms(1000);
+	err_code = flash_storage_read(NULL,0x3e000, read_data_buff,6);
+	G_CHECK_ERROR_CODE_INFO(err_code);
 	for(;;)
 	{
 	//	NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());
 	//	app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
 		//app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
 
-		idle_state_handle();
+		//idle_state_handle();
 	}
 }
 
