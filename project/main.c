@@ -298,8 +298,8 @@ static void idle_state_handle(void)
 int main(void)
 {
 	ret_code_t err_code;
-	uint8_t write_data_buff[256] = {0x00,0xAA,0x55,0x23,0x88,0x77,0x99,0x56};
-	uint8_t read_data_buff[256] = {0};
+	//uint8_t write_data_buff[256] = {0x00,0xAA,0x55,0x23,0x88,0x77,0x99,0x56};
+	//uint8_t read_data_buff[256] = {0};
 	main_log_init();
 	main_leds_init();
 //	main_lfclk_config();
@@ -318,18 +318,9 @@ int main(void)
 //	conn_params_init();
 //	peer_manager_init();
   // advertising_start();
-	flash_storage_init();
-	nrf_delay_ms(1000);
-	err_code = flash_storage_write(NULL,0x3e000,&write_data_buff,4,NULL);
-	G_CHECK_ERROR_CODE_INFO(err_code);
-	err_code = flash_storage_read(NULL,0x3e000, &read_data_buff,6);
-	G_CHECK_ERROR_CODE_INFO(err_code);
-	nrf_delay_ms(1000);
-	err_code = flash_storage_erase(NULL,0x3e000,1,NULL);
-	G_CHECK_ERROR_CODE_INFO(err_code);
-	nrf_delay_ms(1000);
-	err_code = flash_storage_read(NULL,0x3e000, read_data_buff,6);
-	G_CHECK_ERROR_CODE_INFO(err_code);
+	//flash_data_storage_init();
+	//test_fds_record_write();
+    test_fds_main();
 	for(;;)
 	{
 	//	NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());

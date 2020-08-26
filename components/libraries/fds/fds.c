@@ -1833,6 +1833,7 @@ ret_code_t fds_record_close(fds_record_desc_t * const p_desc)
 
             ret = FDS_SUCCESS;
         }
+		
         else
         {
             ret = FDS_ERR_NO_OPEN_RECORDS;

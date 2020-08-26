@@ -1,5 +1,9 @@
 #ifndef __NUS_H
 #define __NUS_H
+#define MY_QUEUE_ENABLE 1
+#include <stdint.h>
+#include "ble_gatts.h"
+#include "my_queue.h"
 
 #ifdef NUS_GLOBAL
 #define NUS_ETX
@@ -24,7 +28,7 @@ extern "C" {
 #define CTS_PIN_NUMBER	5
 #define UART_RX_BUF_SIZE	256
 #define UART_TX_BUF_SIZE	256
-
+#define BLE_UARTS_BUFF_MAX 25
 
 //	ÊµÀý»¯ºê
 #define BLE_UARTS_DEF(_name) \
@@ -65,6 +69,7 @@ typedef void (*ble_uarts_data_handler_t)(ble_uarts_evt_t *p_evt);
 
 struct _ble_uarts_t
 {
+	uint16_t conn_handle;
 	uint8_t uuid_type;
 	uint16_t service_handler;
 	ble_gatts_char_handles_t TX_handler;
@@ -83,11 +88,10 @@ NUS_ETX bool ble_RX_flage;
 void ble_uarts_on_ble_evt(ble_evt_t const * p_ble_evt,void * p_context);
 NUS_ETX ret_code_t ble_uarts_init(ble_uarts_t *p_uarts,ble_uarts_init_t *p_uarts_init);
 
-NUS_ETX void service_uarts_init(ble_uarts_t* p_uarts);
+NUS_ETX void service_uarts_init(void);
 NUS_ETX void uart_init(void);
 
 NUS_ETX void data_transmit(void);
-
 
 #ifdef __cplusplus
 }			
