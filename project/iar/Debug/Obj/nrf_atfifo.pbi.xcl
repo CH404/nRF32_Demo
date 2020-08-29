@@ -103,6 +103,16 @@ E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\..\..\components\ble\ble_servi
 -I
 E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\..\..\m_libraries
 -I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\..\..\external\freertos\config
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\CMSIS\nrf52
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\IAR\nrf52
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\include
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\portable\MemMang
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\inc\c
@@ -204,6 +214,16 @@ E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\components\ble\ble_services\ble_hrs
 E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\components\ble\ble_services\ble_dis
 -I
 E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\m_libraries
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\config
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\CMSIS\nrf52
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\IAR\nrf52
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\include
+-I
+E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\portable\MemMang
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

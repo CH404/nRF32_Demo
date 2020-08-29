@@ -3032,14 +3032,14 @@
  
 
 #ifndef NRFX_RTC1_ENABLED
-#define NRFX_RTC1_ENABLED 1
+#define NRFX_RTC1_ENABLED 0
 #endif
 
 // <q> NRFX_RTC2_ENABLED  - Enable RTC2 instance
  
 
 #ifndef NRFX_RTC2_ENABLED
-#define NRFX_RTC2_ENABLED 0
+#define NRFX_RTC2_ENABLED 1
 #endif
 
 // <o> NRFX_RTC_MAXIMUM_LATENCY_US - Maximum possible time[us] in highest priority interrupt 
@@ -3079,7 +3079,7 @@
 // <e> NRFX_RTC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRFX_RTC_CONFIG_LOG_ENABLED
-#define NRFX_RTC_CONFIG_LOG_ENABLED 0
+#define NRFX_RTC_CONFIG_LOG_ENABLED 1
 #endif
 // <o> NRFX_RTC_CONFIG_LOG_LEVEL  - Default Severity level
  
@@ -3106,7 +3106,7 @@
 // <8=> White 
 
 #ifndef NRFX_RTC_CONFIG_INFO_COLOR
-#define NRFX_RTC_CONFIG_INFO_COLOR 0
+#define NRFX_RTC_CONFIG_INFO_COLOR 2
 #endif
 
 // <o> NRFX_RTC_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
@@ -5124,14 +5124,14 @@
  
 
 #ifndef RTC1_ENABLED
-#define RTC1_ENABLED 1
+#define RTC1_ENABLED 0
 #endif
 
 // <q> RTC2_ENABLED  - Enable RTC2 instance
  
 
 #ifndef RTC2_ENABLED
-#define RTC2_ENABLED 0
+#define RTC2_ENABLED 1
 #endif
 
 // <o> NRF_MAXIMUM_LATENCY_US - Maximum possible time[us] in highest priority interrupt 
@@ -12513,7 +12513,7 @@
 // <2=> NRF_SDH_DISPATCH_MODEL_POLLING 
 
 #ifndef NRF_SDH_DISPATCH_MODEL
-#define NRF_SDH_DISPATCH_MODEL 0
+#define NRF_SDH_DISPATCH_MODEL 2
 #endif
 
 // </h> 

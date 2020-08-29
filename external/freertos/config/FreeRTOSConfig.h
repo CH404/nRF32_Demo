@@ -55,9 +55,9 @@
 
 #define configTICK_SOURCE                                                         FREERTOS_USE_RTC
 
-#define configUSE_PREEMPTION                                                      1
-#define configUSE_PORT_OPTIMISED_TASK_SELECTION                                   0
-#define configUSE_TICKLESS_IDLE                                                   0
+#define configUSE_PREEMPTION                                                      1     //抢占式内核
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION                                   0     //软件选择下个任务
+#define configUSE_TICKLESS_IDLE                                                   0     //低功耗tick
 #define configUSE_TICKLESS_IDLE_SIMPLE_DEBUG                                      1 /* See into vPortSuppressTicksAndSleep source code for explanation */
 #define configCPU_CLOCK_HZ                                                        ( SystemCoreClock )
 #define configTICK_RATE_HZ                                                        1024
@@ -66,7 +66,7 @@
 #define configTOTAL_HEAP_SIZE                                                     ( 4096 )
 #define configMAX_TASK_NAME_LEN                                                   ( 4 )
 #define configUSE_16_BIT_TICKS                                                    0
-#define configIDLE_SHOULD_YIELD                                                   1
+#define configIDLE_SHOULD_YIELD                                                   1//定义空闲任务（idle task）与处于同等优先级任务的行为，0不会为同等优先级任务让处cpu使用
 #define configUSE_MUTEXES                                                         1
 #define configUSE_RECURSIVE_MUTEXES                                               1
 #define configUSE_COUNTING_SEMAPHORES                                             1
@@ -93,7 +93,7 @@
 #define configMAX_CO_ROUTINE_PRIORITIES                                           ( 2 )
 
 /* Software timer definitions. */
-#define configUSE_TIMERS                                                          0
+#define configUSE_TIMERS                                                          1     //启用软件定时器
 #define configTIMER_TASK_PRIORITY                                                 ( 2 )
 #define configTIMER_QUEUE_LENGTH                                                  32
 #define configTIMER_TASK_STACK_DEPTH                                              ( 80 )

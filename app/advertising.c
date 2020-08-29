@@ -57,11 +57,25 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 void advertising_start(void)
 {
     
-       NRF_LOG_INFO("advertising_start");
+      NRF_LOG_INFO("advertising_start");
       ret_code_t err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);     
-        APP_ERROR_CHECK(err_code);
+      APP_ERROR_CHECK(err_code);
 		
 }
+/*****************************************************
+函数名：void advertising_start(void)
+参数：无
+作用：开始广播
+******************************************************/
+void advertising_free_start(void * p_context)
+{
+	UNUSED_PARAMETER(p_context);
+      NRF_LOG_INFO("advertising_start");
+      ret_code_t err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);     
+      APP_ERROR_CHECK(err_code);
+		
+}
+
 
 //定义服务UUID数组
 static ble_uuid_t m_adv_uuids[] = 

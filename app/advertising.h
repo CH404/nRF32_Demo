@@ -25,6 +25,6 @@ ADVERTISING_EXT void advertising1_init(void);
 ADVERTISING_EXT void advertising_start1(void);
 ADVERTISING_EXT void advertising_all_params_init(void);
 
-
+ADVERTISING_EXT void advertising_free_start(void * p_context);
 #endif
 

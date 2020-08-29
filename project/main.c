@@ -2,10 +2,15 @@
 #define MAIN_GLOBAL
 #include "global.h"
 #include "nrf_delay.h"
+
 APP_TIMER_DEF(led_timer);
 NRF_BLE_GATT_DEF(m_gatt);//定义gatt模块实例
 static uint16_t   m_conn_handle          = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
 static uint16_t   m_ble_nus_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - 3;            /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
+
+#if (NRF_LOG_ENABLED&&(!NRF_LOG_DEFERRED))
+static TaskHandle_t m_logger_thread;
+#endif
 static void led_timer_handler(void *p_context)
 {
 	
@@ -140,9 +145,19 @@ uint32_t get_rtc_counter(void)
     return NRF_RTC1->COUNTER;
 }
 
-
+static void logger_thread(void *arg)
+{
+	UNUSED_PARAMETER(arg);
+	while(1)
+	{
+		NRF_LOG_FLUSH();
+		vTaskSuspend(NULL);
+	}
+}
 void main_log_init(void)
 {
+#if NRF_LOG_ENABLED
+	
 	//初始化log
 	ret_code_t err_code = NRF_LOG_INIT(get_rtc_counter);
 	//APP_ERROR_CHECK(err_code);
@@ -151,6 +166,12 @@ void main_log_init(void)
 	NRF_LOG_DEFAULT_BACKENDS_INIT();
 //	NRF_LOG_INFO("log_init success.");
 	G_CHECK_ERROR_CODE_INFO(err_code);
+#elif (!NRF_LOG_DEFERRED)
+	if(pdPASS != xTaskCreate(logger_thread,"LOGGER",256,NULL,1&m_logger_thread))
+	{
+		APP_ERROR_HANDLER(NRF_ERROR_NO_MEM);
+	}        
+#endif  
 	
 }
 void main_timer_init(void)
@@ -298,29 +319,29 @@ static void idle_state_handle(void)
 int main(void)
 {
 	ret_code_t err_code;
-	//uint8_t write_data_buff[256] = {0x00,0xAA,0x55,0x23,0x88,0x77,0x99,0x56};
-	//uint8_t read_data_buff[256] = {0};
+
 	main_log_init();
-	main_leds_init();
+//	main_leds_init();
 //	main_lfclk_config();
-	main_timer_init();
- 
-	//power_management_init();
+//	main_timer_init();
+   
+	power_management_init();
 	ble_stack_init();
-//	gap_params_init();
-	//gatt_init();
-	//service_init();
-//	advertising_init();
- //advertising1_init();
+	gap_params_init();
+	gatt_init();
+	service_init();
+    advertising_init();
+  //  advertising1_init();
   // advertising_all_params_init();
 	
 //	service_his_init();
-//	conn_params_init();
+	conn_params_init();
 //	peer_manager_init();
   // advertising_start();
-	//flash_data_storage_init();
-	//test_fds_record_write();
-    test_fds_main();
+    nrf_sdh_freertos_init(&advertising_free_start,NULL);
+  	
+  RTC2_init(NULL);
+  vTaskStartScheduler();
 	for(;;)
 	{
 	//	NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());

@@ -402,6 +402,11 @@
                     <state>$PROJ_DIR$\..\..\components\ble\ble_services\ble_hrs</state>
                     <state>$PROJ_DIR$\..\..\components\ble\ble_services\ble_dis</state>
                     <state>$PROJ_DIR$\..\..\m_libraries</state>
+                    <state>$PROJ_DIR$\..\..\external\freertos\config</state>
+                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\CMSIS\nrf52</state>
+                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\IAR\nrf52</state>
+                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\include</state>
+                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\portable\MemMang</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2142,6 +2147,9 @@
             <name>$PROJ_DIR$\..\main.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\app\rtc.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\config\sdk_config.h</name>
         </file>
         <file>
@@ -2155,6 +2163,42 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\modules\nrfx\mdk\system_nrf52.c</name>
+        </file>
+    </group>
+    <group>
+        <name>FreeRTOS</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\croutine.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\event_groups.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\portable\MemMang\heap_4.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\list.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\portable\IAR\nrf52\port.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\portable\CMSIS\nrf52\port_cmsis.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\portable\CMSIS\nrf52\port_cmsis_systick.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\queue.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\stream_buffer.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\tasks.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\timers.c</name>
         </file>
     </group>
     <group>
@@ -2244,6 +2288,9 @@
             <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_rtc.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>
         </file>
         <file>
@@ -2262,7 +2309,7 @@
             <name>$PROJ_DIR$\..\..\components\libraries\util\app_error_weak.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\components\libraries\timer\app_timer.c</name>
+            <name>$PROJ_DIR$\..\..\components\libraries\timer\app_timer_freertos.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\libraries\util\app_util_platform.c</name>
@@ -2368,6 +2415,9 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\softdevice\common\nrf_sdh_ble.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\softdevice\common\nrf_sdh_freertos.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\softdevice\common\nrf_sdh_soc.c</name>

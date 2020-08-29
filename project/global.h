@@ -30,7 +30,7 @@
 #include "service.h"
 //#include "hrs.h"
 #include "nus.h"
-
+#include "rtc.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
@@ -38,6 +38,10 @@
 
 #include "my_queue.h"
 #include "flash_storage.h"
+
+#include "FreeRTOS.h"
+#include "task.h"
+#include "nrf_sdh_freertos.h"
 
 #define G_CHECK_ERROR_CODE_INFO(err_code)    if(err_code != NRF_SUCCESS)\
 {																									\

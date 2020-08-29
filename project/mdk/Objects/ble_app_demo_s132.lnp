@@ -4,7 +4,6 @@
 ".\objects\main.o"
 ".\objects\advertising.o"
 ".\objects\service.o"
-".\objects\flash_storage.o"
 ".\objects\nrf_drv_clock.o"
 ".\objects\nrf_drv_uart.o"
 ".\objects\nrfx_clock.o"

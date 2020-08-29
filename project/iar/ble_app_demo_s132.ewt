@@ -2384,6 +2384,9 @@
             <name>$PROJ_DIR$\..\main.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\app\rtc.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\config\sdk_config.h</name>
         </file>
         <file>
@@ -2397,6 +2400,42 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\modules\nrfx\mdk\system_nrf52.c</name>
+        </file>
+    </group>
+    <group>
+        <name>FreeRTOS</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\croutine.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\event_groups.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\portable\MemMang\heap_4.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\list.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\portable\IAR\nrf52\port.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\portable\CMSIS\nrf52\port_cmsis.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\portable\CMSIS\nrf52\port_cmsis_systick.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\queue.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\stream_buffer.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\tasks.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\external\freertos\source\timers.c</name>
         </file>
     </group>
     <group>
@@ -2486,6 +2525,9 @@
             <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_rtc.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>
         </file>
         <file>
@@ -2504,7 +2546,7 @@
             <name>$PROJ_DIR$\..\..\components\libraries\util\app_error_weak.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\components\libraries\timer\app_timer.c</name>
+            <name>$PROJ_DIR$\..\..\components\libraries\timer\app_timer_freertos.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\libraries\util\app_util_platform.c</name>
@@ -2610,6 +2652,9 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\softdevice\common\nrf_sdh_ble.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\softdevice\common\nrf_sdh_freertos.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\softdevice\common\nrf_sdh_soc.c</name>
