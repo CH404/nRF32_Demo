@@ -403,10 +403,10 @@
                     <state>$PROJ_DIR$\..\..\components\ble\ble_services\ble_dis</state>
                     <state>$PROJ_DIR$\..\..\m_libraries</state>
                     <state>$PROJ_DIR$\..\..\external\freertos\config</state>
-                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\CMSIS\nrf52</state>
-                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\IAR\nrf52</state>
-                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\include</state>
-                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\portable\MemMang</state>
+                    <state>$PROJ_DIR$\..\..\external\freertos\portable\CMSIS\nrf52</state>
+                    <state>$PROJ_DIR$\..\..\external\freertos\portable\IAR\nrf52</state>
+                    <state>$PROJ_DIR$\..\..\external\freertos\source\include</state>
+                    <state>$PROJ_DIR$\..\..\external\freertos\source\portable\MemMang</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -829,7 +829,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>E:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\ble_app_demo_s132_iar_nRF5x.icf</state>
+                    <state>D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\ble_app_demo_s132_iar_nRF5x.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>

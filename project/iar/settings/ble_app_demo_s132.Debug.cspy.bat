@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "G:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.general.xcl" --backend -f "G:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.general.xcl" --backend -f "D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "G:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.general.xcl" "--debug_file=%~1" --backend -f "G:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\settings\ble_app_demo_s132.Debug.driver.xcl" 
 
 @echo off 
 :end

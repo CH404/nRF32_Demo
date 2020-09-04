@@ -27,6 +27,12 @@ typedef struct
 
 RTC_EXT void RTC1_Init(void);
 RTC_EXT void RTC2_init(nrfx_rtc_handler_t handler);
+RTC_EXT void update_time(void);
+RTC_EXT void data_convert(real_time_t data,uint8_t * buff);
+RTC_EXT ret_code_t service_rtc_init(void);
+RTC_EXT void ble_service_rtcTime_init(void);
+RTC_EXT void bel_service_rtcTime_send(void);
+
 
 #endif
 

@@ -107,7 +107,7 @@ void advertising_init(void)
         init.advdata.uuids_complete.uuid_cnt = (sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]));
         init.advdata.uuids_complete.p_uuids = m_adv_uuids;
 	
-        NRF_LOG_INFO("%d",(sizeof(m_adv_uuids) ))
+      //  NRF_LOG_INFO("%d",(sizeof(m_adv_uuids) ))
      //     while(1);
 	init.config.ble_adv_fast_enabled = true;	//快速广播
 
@@ -117,7 +117,7 @@ void advertising_init(void)
 	init.evt_handler = on_adv_evt;	//广播回调函数
 	
 	err_code = ble_advertising_init(&m_advertising,&init);//初始化广播
-	NRF_LOG_INFO("%d",err_code);
+	//NRF_LOG_INFO("%d",err_code);
 	G_CHECK_ERROR_CODE_INFO(err_code);
 
 	ble_advertising_conn_cfg_tag_set(&m_advertising,APP_BLE_CONN_CFG_TAG);

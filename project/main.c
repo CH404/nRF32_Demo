@@ -36,7 +36,7 @@ static void power_management_init(void)
 	ret_code_t err_code = nrf_pwr_mgmt_init();
 	G_CHECK_ERROR_CODE_INFO(err_code);
 }
-
+extern uint16_t rtc_connect;
 static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 {
 	//ret_code_t err_code = NRF_SUCCESS;
@@ -47,6 +47,7 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 			NRF_LOG_INFO("Disconnected");
 			break;
 		case BLE_GAP_EVT_CONNECTED:
+			rtc_connect = p_ble_evt->evt.gattc_evt.conn_handle;
 			NRF_LOG_INFO("Connected");
 			// hrs_timer_start();
 			break;
@@ -262,7 +263,9 @@ static void conn_params_init(void)
     err_code = ble_conn_params_init(&cp_init);
     APP_ERROR_CHECK(err_code);
 }
-/*static void pm_evt_handler(pm_evt_t const * p_evt)
+
+
+static void pm_evt_handler(pm_evt_t const * p_evt)
 {
     pm_handler_on_pm_evt(p_evt);
     pm_handler_flash_clean(p_evt);
@@ -270,7 +273,8 @@ static void conn_params_init(void)
     switch (p_evt->evt_id)
     {
         case PM_EVT_PEERS_DELETE_SUCCEEDED:
-            advertising_start(false);
+			NRF_LOG_INFO("pm_evt_handler");
+            advertising_start();
             break;
 
         default:
@@ -302,11 +306,12 @@ static void peer_manager_init(void)
     sec_param.kdist_peer.id  = 1;
 
     err_code = pm_sec_params_set(&sec_param);
-    APP_ERROR_CHECK(err_code);
-
+   // APP_ERROR_CHECK(err_code);
+	G_CHECK_ERROR_CODE_INFO(err_code);
     err_code = pm_register(pm_evt_handler);
-    APP_ERROR_CHECK(err_code);
-}*/
+   // APP_ERROR_CHECK(err_code);
+   G_CHECK_ERROR_CODE_INFO(err_code);
+}
 
 static void idle_state_handle(void)
 {
@@ -316,6 +321,9 @@ static void idle_state_handle(void)
         nrf_pwr_mgmt_run();
     }
 }
+extern nrfx_rtc_t rtc2;
+uint32_t aaaaa;
+extern uint32_t timeeeee;
 int main(void)
 {
 	ret_code_t err_code;
@@ -325,29 +333,31 @@ int main(void)
 //	main_lfclk_config();
 //	main_timer_init();
    
-	power_management_init();
+//	power_management_init();
 	ble_stack_init();
-	gap_params_init();
-	gatt_init();
-	service_init();
-    advertising_init();
+//	gap_params_init();
+//	gatt_init();
+//	service_init();
+//    advertising_init();
   //  advertising1_init();
   // advertising_all_params_init();
 	
 //	service_his_init();
-	conn_params_init();
+//	conn_params_init();
 //	peer_manager_init();
   // advertising_start();
-    nrf_sdh_freertos_init(&advertising_free_start,NULL);
+//    nrf_sdh_freertos_init(&advertising_free_start,NULL);
   	
   RTC2_init(NULL);
-  vTaskStartScheduler();
-	for(;;)
+ // vTaskStartScheduler();
+ // bel_service_rtcTime_send();
+	while(1)
 	{
 	//	NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());
 	//	app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
 		//app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
-
+       //   nrfx_rtc_counter_clear(&rtc2);
+ 
 		//idle_state_handle();
 	}
 }
