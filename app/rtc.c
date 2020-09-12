@@ -28,11 +28,49 @@ const nrfx_rtc_t rtc1 = NRFX_RTC_INSTANCE(1);	//nrfx 新库，支持旧库名
 #endif
 #if NRFX_RTC2_ENABLED
 const nrfx_rtc_t rtc2 = NRFX_RTC_INSTANCE(2);
-#endif
 
+
+BLE_RTCDATE_DEF(m_rtcdate);
+
+void on_write(ble_rtcdate_t * p_rtcdate, ble_evt_t const * p_ble_evt)
+{
+	uint8_t data_buff[7];
+	uint8_t i;
+	ble_gatts_evt_write_t const *p_write_evt = &p_ble_evt->evt.gatts_evt.params.write;
+	if(p_rtcdate->rtc_characteristic_date_handle.value_handle != p_write_evt->handle)
+		{
+			return;
+		}
+
+	//读出数据
+	memcpy(data_buff,&p_write_evt->data,p_write_evt->len);
+	for(i=0;i<p_write_evt->len;i++)
+		{
+			NRF_LOG_INFO("%d",p_write_evt->data[i]);
+		}
+}
+
+void ble_RTCDATE_on_ble_evt(ble_evt_t const * p_ble_evt,void * p_context)
+{
+	ble_rtcdate_t* p_rtcdate = (ble_rtcdate_t *)p_context;
+	switch(p_ble_evt->header.evt_id)
+		{
+			case BLE_GAP_EVT_CONNECTED:
+
+				//存储链接客户端handle
+				p_rtcdate->rtc_connect = p_ble_evt->evt.gap_evt.conn_handle;
+				break;
+			case BLE_GAP_EVT_DISCONNECTED:
+				p_rtcdate->rtc_connect = BLE_CONN_HANDLE_INVALID;
+				break;
+			case BLE_GATTS_EVT_WRITE:
+				on_write(p_rtcdate,p_ble_evt);
+				break;
+				
+		}
+}
 
 static uint32_t real_time = 0;
-
 
 /************************************************
 说明: rtc tick event回调函数
@@ -61,9 +99,9 @@ static void tick_event_handler(void)
 参数:evt_type: [in] rtc的event类型
 返回值:
 **************************************************/
-uint32_t timeeeee = 0;
 static void rtc2_handler(nrfx_rtc_int_type_t evt_type)
 {
+	BaseType_t pxHigherPriorityTaskWoken;
 	static uint8_t tick_cnt = 0;
 	switch(evt_type)
 	{
@@ -72,9 +110,11 @@ static void rtc2_handler(nrfx_rtc_int_type_t evt_type)
 		NRF_LOG_INFO("NRFX_RTC_INT_TICK");
 		break;
 	case NRFX_RTC_INT_COMPARE0:
+		real_time++;
+		xSemaphoreGiveFromISR(DateUpdateSem, &pxHigherPriorityTaskWoken);
         nrfx_rtc_counter_clear(&rtc2);
 		nrfx_rtc_cc_set(&rtc2,0, 8,true);
-		NRF_LOG_INFO("NRFX_RTC_INT_COMPARE0");
+	//	NRF_LOG_INFO("NRFX_RTC_INT_COMPARE0");
 		break;
 	}
 }
@@ -195,8 +235,12 @@ void update_time(void)
 **************************************************/
 void data_convert(real_time_t data,uint8_t * buff)
 {
-	buff[0] = (uint8_t)(data.year >> 8);
-	buff[1] = (uint8_t)(data.year & 0x00FF);
+        uint8_t yearH,yearL;
+        yearH = (uint8_t)(data.year / 100);
+        yearL = (uint8_t)(data.year % 100);
+  
+	buff[0] = yearH;
+	buff[1] = yearL;
 	buff[2] = data.month;
 	buff[3] = data.day;
 	buff[4] = data.hours;
@@ -223,15 +267,15 @@ void data_convert(real_time_t data,uint8_t * buff)
 //#define RTC_DATE_LENGTH 	 
 
 uint16_t rtc_service_handle;
-ble_gatts_char_handles_t rtc_characteristic_date_handle;
-uint16_t rtc_characteristic_time_handle;
+//ble_gatts_char_handles_t rtc_characteristic_date_handle;
+//ble_gatts_char_handles_t rtc_characteristic_time_handle;
 
-ret_code_t service_rtc_init(void)
+ret_code_t service_rtc_init(ble_rtcdate_t *p_rtcdate)
 {
 	ret_code_t err_code = NRF_SUCCESS;
 	ble_uuid_t ble_uuid;
 	uint8_t uuid_type;
-	uint8_t data_buff[7] = {0};
+        uint8_t data_buff[7];
 	
 	ble_uuid128_t rtc_base_uuid = RTC_BASE_UUID;
 
@@ -244,19 +288,19 @@ ret_code_t service_rtc_init(void)
 
 	ble_uuid.uuid = RTC_SERVICE_UUID;
 	ble_uuid.type = uuid_type;
-	sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,&ble_uuid,&rtc_service_handle);
+	sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,&ble_uuid,&p_rtcdate->rtc_service_handle);
 	G_CHECK_ERROR_CODE_INFO(err_code);
 
 	memset(&add_char_params,0,sizeof(add_char_params));
 	add_char_params.is_var_len = true;	//特征值的字节长度是否可变
 	add_char_params.max_len = BEL_RTC_MAX_DATA_LEN;		//特征可传输的最大长度
-	add_char_params.cccd_write_access = SEC_OPEN; 	    //写CCCD的安全要求，应该是server端使能或禁用时的安全
+	add_char_params.cccd_write_access =SEC_OPEN; 	    //写CCCD的安全要求，应该是server端使能或禁用时的安全
 	//add_char_params.char_ext_props					//特征扩展属性，允许写入特征用户描述描述符，允许使用排队写入操作写入值
 	//特征属性
 //	add_char_params.char_props.broadcast = 1;//广播此特征
 	add_char_params.char_props.notify  = 1; //使能通知
-//	add_char_params.char_props.write = 1; //使能可写
-	
+	add_char_params.char_props.write = 1; //使能可写
+	add_char_params.write_access = SEC_MITM;
 	add_char_params.init_len = sizeof(data_buff);							//初始化时的特征值长度
 //	add_char_params.is_defered_read = true;						//indicate 是否延时读操作
 //	add_char_params.is_defered_write = true;					//indicate 是否延时写操作
@@ -268,7 +312,7 @@ ret_code_t service_rtc_init(void)
 	add_char_params.uuid_type = uuid_type;
 //	add_char_params.write_access = SEC_OPEN;						//写特征值的安全需求
 
-	err_code = characteristic_add(rtc_service_handle,&add_char_params,&rtc_characteristic_date_handle);
+	err_code = characteristic_add(rtc_service_handle,&add_char_params,&p_rtcdate->rtc_characteristic_date_handle);
 	G_CHECK_ERROR_CODE_INFO(err_code);
 	NRF_LOG_INFO("%d",sizeof(data_buff));
 }
@@ -281,28 +325,85 @@ ret_code_t service_rtc_init(void)
 **************************************************/
 void ble_service_rtcTime_init(void)
 {
-	RTC2_init(&rtc2_handler);
-	service_rtc_init();
+	RTC2_init(NULL);
+	service_rtc_init(&m_rtcdate);
 }
-uint16_t rtc_connect;
 
-void bel_service_rtcTime_send(void)
+/************************************************
+说明:notify 函数
+函数名:void ble_service_rtcTime_send(ble_rtcdate_t *p_rtcdate,uint8_t *data_buff,uint16_t data_length)
+参数:p_rtcdate handle
+返回值:
+**************************************************/
+
+void ble_service_rtcTime_send(ble_rtcdate_t *p_rtcdate,uint8_t *data_buff,uint16_t data_length)
 {
-	uint8_t data_buff[7];
-	uint16_t data_length;
 	ble_gatts_hvx_params_t hvx_params;
 	memset(&hvx_params,0,sizeof(hvx_params));
 	
-	data_convert(time_base,data_buff);
-	NRF_LOG_INFO("%d%d%d%d",data_buff[0],data_buff[1],data_buff[2],data_buff[3]);
-	hvx_params.handle =rtc_characteristic_date_handle.value_handle;
+
+	hvx_params.handle =p_rtcdate->rtc_characteristic_date_handle.value_handle;
 	hvx_params.p_data = data_buff;
 	hvx_params.p_len = &data_length;
 	hvx_params.type = BLE_GATT_HVX_NOTIFICATION;	//使用notification 通知
-	sd_ble_gatts_hvx(rtc_connect,&hvx_params);	//notification 函数	
+	sd_ble_gatts_hvx(p_rtcdate->rtc_connect,&hvx_params);	//notification 函数	
 }
 
+#if RTC_FREERTOS
 
+#define DateUpdateSemMaxCount 1
+#define DateUpdateSemInitCount 0
+//SemaphoreHandle_t DateUpdateSem;
+
+#define DATE_UPDATE_TASK_SIZE 50
+#define DATE_UPDATE_TASK_PRIO 2
+TaskHandle_t DateUpdateTaskHandle;
+void DateUpdateTaskHandler(void *pvParamenters);
+
+void DateUpdateTaskHandler(void *pvParamenters)
+{
+	static uint8_t battery_level = 0;
+	BaseType_t xReturn = pdPASS;
+	uint8_t buff[7] = {0};
+	while(1)
+	{
+		xReturn = xSemaphoreTake(DateUpdateSem, portMAX_DELAY);
+		if(pdTRUE == xReturn)
+			{
+			update_time();
+		data_convert(current_time,buff);
+		ble_service_rtcTime_send(&m_rtcdate,buff,7);
+		battery_level++;
+		if(battery_level >= 100)
+			battery_level = 0;
+		bas_notification_send(battery_level,m_rtcdate.rtc_connect);
+			
+			}
+	}
+}	
+
+
+/************************************************
+说明:创建freertos任务
+函数名:void rtcdate_task_init(void)
+参数:p_rtcdate handle
+返回值:
+**************************************************/
+void rtcdate_task_init(void)
+{
+	//创建计数信号量
+	DateUpdateSem = xSemaphoreCreateCounting(DateUpdateSemMaxCount,DateUpdateSemInitCount);
+	if(DateUpdateSem == NULL)
+	{
+		NRF_LOG_ERROR("Semaphore create error");
+	}
+	xTaskCreate((TaskFunction_t)DateUpdateTaskHandler,"DateUpdate",DATE_UPDATE_TASK_SIZE,NULL,DATE_UPDATE_TASK_PRIO,DateUpdateTaskHandle);
+}
+
+#endif
+
+
+#endif
 
 
 #endif

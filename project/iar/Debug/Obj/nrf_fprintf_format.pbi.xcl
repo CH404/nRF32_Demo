@@ -113,6 +113,8 @@ D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\..\..\external\freertos\source
 -I
 D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\..\..\external\freertos\source\portable\MemMang
 -I
+D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\project\iar\..\..\components\ble\ble_services\ble_bas
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\inc\c
@@ -224,6 +226,8 @@ D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\portable\IAR\nrf52
 D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\include
 -I
 D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\external\freertos\source\portable\MemMang
+-I
+D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\components\ble\ble_services\ble_bas
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

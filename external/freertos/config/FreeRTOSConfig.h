@@ -56,8 +56,8 @@
 #define configTICK_SOURCE                                                         FREERTOS_USE_RTC
 
 #define configUSE_PREEMPTION                                                      1     //抢占式内核
-#define configUSE_PORT_OPTIMISED_TASK_SELECTION                                   0     //软件选择下个任务
-#define configUSE_TICKLESS_IDLE                                                   0     //低功耗tick
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION                                   1     //软件选择下个任务
+#define configUSE_TICKLESS_IDLE                                                   1     //低功耗tick
 #define configUSE_TICKLESS_IDLE_SIMPLE_DEBUG                                      1 /* See into vPortSuppressTicksAndSleep source code for explanation */
 #define configCPU_CLOCK_HZ                                                        ( SystemCoreClock )
 #define configTICK_RATE_HZ                                                        1024
@@ -93,7 +93,7 @@
 #define configMAX_CO_ROUTINE_PRIORITIES                                           ( 2 )
 
 /* Software timer definitions. */
-#define configUSE_TIMERS                                                          1     //启用软件定时器
+#define configUSE_TIMERS                                                          1     //使能启用软件定时器
 #define configTIMER_TASK_PRIORITY                                                 ( 2 )
 #define configTIMER_QUEUE_LENGTH                                                  32
 #define configTIMER_TASK_STACK_DEPTH                                              ( 80 )
@@ -138,14 +138,14 @@ function. */
 routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
 INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
 PRIORITY THAN THIS! (higher priorities are lower numeric values. */
-#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY    _PRIO_APP_HIGH
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY    _PRIO_APP_HIGH   
 
 
 /* Interrupt priorities used by the kernel port layer itself.  These are generic
 to all Cortex-M ports, and do not rely on any particular library functions. */
 #define configKERNEL_INTERRUPT_PRIORITY                 configLIBRARY_LOWEST_INTERRUPT_PRIORITY
 /* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
-See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
+See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */    //系统可管理的最高中断优先级
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY            configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS

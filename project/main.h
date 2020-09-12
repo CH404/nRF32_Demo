@@ -42,11 +42,28 @@
 #define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000)
 #define MAX_CONN_PARAMS_UPDATE_COUNT    3 
 
-#define SEC_PARAM_BOND                  1                                       /**< Perform bonding. */
-#define SEC_PARAM_MITM                  0                                       /**< Man In The Middle protection not required. */
+//#define JUSTWORKS
+#define STATICPASSKEY
+
+#ifdef JUSTWORKS
+#define SEC_PARAM_BOND                  1                                      /**< Perform bonding. */
+#define SEC_PARAM_MITM                  0                                      /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                    /**< No I/O capabilities. */
+#define SET_PASSKEY						0
+#elif defined STATICPASSKEY
+#define SEC_PARAM_BOND                  1                                      /**< Perform bonding. */
+#define SEC_PARAM_MITM                  1                                       /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_DISPLAY_ONLY                    /**< No I/O capabilities. */
+#define SET_PASSKEY						1
+#else
+#define SEC_PARAM_BOND                  1                                      /**< Perform bonding. */
+#define SEC_PARAM_MITM                  1                                       /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_DISPLAY_ONLY                    /**< No I/O capabilities. */
+#define SET_PASSKEY						0
+#endif
+
 #define SEC_PARAM_LESC                  0                                       /**< LE Secure Connections not enabled. */
 #define SEC_PARAM_KEYPRESS              0                                       /**< Keypress notifications not enabled. */
-#define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                    /**< No I/O capabilities. */
 #define SEC_PARAM_OOB                   0                                       /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE          7                                       /**< Minimum encryption key size. */
 #define SEC_PARAM_MAX_KEY_SIZE          16                                      /**< Maximum encryption key size. */
@@ -72,6 +89,7 @@ MAIN_EXT void main_timer_init(void);
 MAIN_EXT void main_leds_init(void);
 MAIN_EXT void main_lfclk_config(void);
 MAIN_EXT void main_led_off(void);
+void main_sec_params_bond(uint16_t conn_handle);
 
 
 

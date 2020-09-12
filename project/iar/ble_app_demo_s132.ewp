@@ -407,6 +407,7 @@
                     <state>$PROJ_DIR$\..\..\external\freertos\portable\IAR\nrf52</state>
                     <state>$PROJ_DIR$\..\..\external\freertos\source\include</state>
                     <state>$PROJ_DIR$\..\..\external\freertos\source\portable\MemMang</state>
+                    <state>$PROJ_DIR$\..\..\components\ble\ble_services\ble_bas</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2138,6 +2139,9 @@
             <name>$PROJ_DIR$\..\..\app\advertising.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\app\app_freertos.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\app\flasg_data_storage.c</name>
         </file>
         <file>
@@ -2404,6 +2408,9 @@
     </group>
     <group>
         <name>nRF_Service</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\components\ble\ble_services\ble_bas\ble_bas.c</name>
+        </file>
         <file>
             <name>$PROJ_DIR$\..\..\components\ble\ble_services\ble_hrs\ble_hrs.c</name>
         </file>

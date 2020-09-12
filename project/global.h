@@ -1,6 +1,7 @@
 #ifndef __GLOBAL_H
 #define __GLOBAL_H
 
+#define RTC_FREERTOS 1
 #define MY_QUEUE_ENABLE 1
 
 #include "nrf_strerror.h"
@@ -35,6 +36,7 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include "nrf_error.h"
+#include "security_manager.h"
 
 #include "my_queue.h"
 #include "flash_storage.h"
@@ -42,6 +44,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "nrf_sdh_freertos.h"
+
+#include "app_freertos.h"
+#include "ble_bas.h"
 
 #define G_CHECK_ERROR_CODE_INFO(err_code)    if(err_code != NRF_SUCCESS)\
 {																									\

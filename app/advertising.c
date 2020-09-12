@@ -46,6 +46,7 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 			break;
 		default:
 			NRF_LOG_INFO("default.");
+			break;
 	}
 }
 
@@ -221,6 +222,7 @@ void advertising_all_params_init(void)
   //是否包含外貌
   init.advdata.include_appearance = true;
   init.advdata.flags = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+  
   //广播数据是否再次包含设备地址
   init.advdata.include_ble_device_addr = false;
  /*     
@@ -257,15 +259,19 @@ ble_advdata_service_data_t sever_data;
   //error 回调函数
   init.error_handler = ble_adv_error_handler; 
   init.evt_handler = on_adv_evt;
+  
+  init.config.ble_adv_on_disconnect_disabled = true;  //断开链接广播停止，静止自动广播
 
 	init.config.ble_adv_fast_enabled = true;	//快速广播
-
 	init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;	//广播间隔
 	init.config.ble_adv_fast_timeout = APP_ADV_DURATION;	//广播持续时间,超时时间
-        
-/*  init.config.ble_adv_slow_enabled = true;
+
+/*	init.config.ble_adv_directed_enabled = true;
+	init.config.ble_adv_directed_interval = APP_ADV_INTERVAL;
+    init.config.ble_adv_directed_timeout =  APP_ADV_DURATION;   */
+  init.config.ble_adv_slow_enabled = true;
   init.config.ble_adv_slow_interval = APP_ADV_SLOW_INTERVAL;
-  init.config.ble_adv_slow_timeout = APP_ADV_SLOW_DURATION;*/
+  init.config.ble_adv_slow_timeout = APP_ADV_SLOW_DURATION;
   
   err_code = ble_advertising_init(&m_advertising,&init);
   G_CHECK_ERROR_CODE_INFO(err_code);
