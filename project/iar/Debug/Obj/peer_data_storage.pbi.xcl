@@ -528,6 +528,8 @@ D:\nRF5_SDK_15.2.0_9412b96\nRF32_Demo\components\ble\ble_services\ble_bas
 -DS132=1
 -DSOFTDEVICE_PRESENT=1
 -DSWI_DISABLE0=1
+-DDEBUG=1
+-DFREERTOS=1
 -D_DLIB_CONFIG_FILE_HEADER_NAME="C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.2\\arm\\inc\\c\\DLib_Config_Full.h"
 -D_DLIB_CONFIG_FILE_STRING="C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.2\\arm\\inc\\c\\DLib_Config_Full.h"
 -D__VERSION__="IAR ANSI C/C++ Compiler V8.32.1.169/W32 for ARM"

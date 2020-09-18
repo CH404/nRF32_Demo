@@ -60,11 +60,15 @@
 #define configUSE_TICKLESS_IDLE                                                   1     //低功耗tick
 #define configUSE_TICKLESS_IDLE_SIMPLE_DEBUG                                      1 /* See into vPortSuppressTicksAndSleep source code for explanation */
 #define configCPU_CLOCK_HZ                                                        ( SystemCoreClock )
-#define configTICK_RATE_HZ                                                        1024
+#define configTICK_RATE_HZ                                                       4096
+
+//用户实际可以使用的优先级范围是 0 到 configMAX_PRIORITIES – 1。比如我们配置此宏定
+//义为 5，那么用户可以使用的优先级号是 0,1,2,3,4，不包含 5，对于这一点，初学者要特别的注意。
+//用户配置任务的优先级数值越小，那么此任务的优先级越低，空闲任务的优先级是 0
 #define configMAX_PRIORITIES                                                      ( 3 )
-#define configMINIMAL_STACK_SIZE                                                  ( 60 )
-#define configTOTAL_HEAP_SIZE                                                     ( 4096 )
-#define configMAX_TASK_NAME_LEN                                                   ( 4 )
+#define configMINIMAL_STACK_SIZE                                                  ( 60 )	//定义空闲任务使用的堆栈大小
+#define configTOTAL_HEAP_SIZE                                                     ( 8*1024 ) //rtos可用的堆区大小
+#define configMAX_TASK_NAME_LEN                                                   ( 16 )	//任务的名的长度
 #define configUSE_16_BIT_TICKS                                                    0
 #define configIDLE_SHOULD_YIELD                                                   1//定义空闲任务（idle task）与处于同等优先级任务的行为，0不会为同等优先级任务让处cpu使用
 #define configUSE_MUTEXES                                                         1
@@ -78,7 +82,7 @@
 #define configENABLE_BACKWARD_COMPATIBILITY                                       1
 
 /* Hook function related definitions. */
-#define configUSE_IDLE_HOOK                                                       0
+#define configUSE_IDLE_HOOK                                                       1
 #define configUSE_TICK_HOOK                                                       0
 #define configCHECK_FOR_STACK_OVERFLOW                                            0
 #define configUSE_MALLOC_FAILED_HOOK                                              0

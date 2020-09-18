@@ -229,6 +229,8 @@
                     <state>S132</state>
                     <state>SOFTDEVICE_PRESENT</state>
                     <state>SWI_DISABLE0</state>
+                    <state>DEBUG</state>
+                    <state>FREERTOS</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -2139,13 +2141,10 @@
             <name>$PROJ_DIR$\..\..\app\advertising.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\app\app_freertos.c</name>
+            <name>$PROJ_DIR$\..\..\app\ble_date.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\app\flasg_data_storage.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\app\flash_storage.c</name>
+            <name>$PROJ_DIR$\..\..\app\common.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\main.c</name>
@@ -2295,10 +2294,7 @@
             <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_rtc.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>
+            <name>$PROJ_DIR$\..\..\modules\nrfx\drivers\src\nrfx_wdt.c</name>
         </file>
     </group>
     <group>

@@ -1,8 +1,7 @@
 #ifndef __GLOBAL_H
 #define __GLOBAL_H
 
-#define RTC_FREERTOS 1
-#define MY_QUEUE_ENABLE 1
+#define MY_QUEUE_ENABLE 0
 
 #include "nrf_strerror.h"
 
@@ -26,11 +25,10 @@
 #include "ble_dis.h"
 
 #include "main.h"
-//#include "rtc.h"
 #include "advertising.h"
 #include "service.h"
 //#include "hrs.h"
-#include "nus.h"
+//#include "nus.h"
 #include "rtc.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -38,20 +36,15 @@
 #include "nrf_error.h"
 #include "security_manager.h"
 
-#include "my_queue.h"
-#include "flash_storage.h"
+//#include "my_queue.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
 #include "nrf_sdh_freertos.h"
 
-#include "app_freertos.h"
 #include "ble_bas.h"
+#include "common.h"
 
-#define G_CHECK_ERROR_CODE_INFO(err_code)    if(err_code != NRF_SUCCESS)\
-{																									\
-	NRF_LOG_INFO("Function: %s error code: %s line: %d.",__func__,NRF_LOG_ERROR_STRING_GET(err_code),__LINE__);\
-}
 	//APP_ERROR_CHECK(error_code); 
 #endif
 

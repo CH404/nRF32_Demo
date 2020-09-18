@@ -8,30 +8,14 @@
 #endif
 
 #include "nrf_drv_rtc.h"
-#include "ble.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "timers.h"
-
-
-#define BLE_RTCDATE_BLE_OBSERVER_PRIO 2
-
-typedef struct
-{
-	uint16_t rtc_connect;
-	uint16_t rtc_service_handle;
-	ble_gatts_char_handles_t rtc_characteristic_date_handle;
-}ble_rtcdate_t;
-
-
-#define BLE_RTCDATE_DEF(_name)\
-static ble_rtcdate_t _name;\
-NRF_SDH_BLE_OBSERVER(_name ## _obs,\
-	BLE_RTCDATE_BLE_OBSERVER_PRIO,\
-        ble_RTCDATE_on_ble_evt,\
-        &_name)
-
-
+#include <stdint.h>
+#include <stdbool.h>
+#include "ble.h"
+#include "ble_srv_common.h"
+#include "nrf_sdh_ble.h"
 
 typedef struct
 {
@@ -44,20 +28,26 @@ typedef struct
 	uint8_t week;
 }real_time_t;
 
-RTC_EXT real_time_t current_time;
-RTC_EXT SemaphoreHandle_t DateUpdateSem;
+
+#define RTCUpdateSemMaxCount 1
+#define RTCUpdateSemInitCount 0
+RTC_EXT SemaphoreHandle_t RTCUpdateSem;
+
+#define RTC_UPDATE_TASK_SIZE 50
+#define RTC_UPDATE_TASK_PRIO 2
+RTC_EXT TaskHandle_t RTCUpdateTaskHandle;
+RTC_EXT void RTCUpdateTaskHandler(void *pvParamenters);
 
 
-void ble_RTCDATE_on_ble_evt(ble_evt_t const * p_ble_evt,void * p_context);
+RTC_EXT SemaphoreHandle_t RTCUpdateSem;
+RTC_EXT TaskHandle_t RTCUpdateTaskHandle;
 
-
-RTC_EXT void RTC1_Init(void);
 RTC_EXT void RTC2_init(nrfx_rtc_handler_t handler);
-RTC_EXT void update_time(void);
 RTC_EXT void data_convert(real_time_t data,uint8_t * buff);
-ret_code_t service_rtc_init(ble_rtcdate_t *p_rtcdate);
-RTC_EXT void ble_service_rtcTime_init(void);
-RTC_EXT void ble_service_rtcTime_send(ble_rtcdate_t *p_rtcdate,uint8_t *data_buff,uint16_t data_length);
+RTC_EXT void update_time(real_time_t *current_time,uint32_t real_time);
+RTC_EXT void update_date(void);
+RTC_EXT bool RTC_semaphore_init(void);
+RTC_EXT void rtc_task_init(void);
 
 
 

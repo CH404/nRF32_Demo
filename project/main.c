@@ -8,21 +8,16 @@ NRF_BLE_GATT_DEF(m_gatt);//定义gatt模块实例
 
 
 
-static uint16_t   m_conn_handle          = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
-static uint16_t   m_ble_nus_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - 3;            /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
 #define STATIC_PASSKEY "890731"
 static ble_opt_t static_option;
-ble_gap_sec_params_t sec_params_auth;
 ble_gap_sec_params_t sec_params;
-ble_gap_sec_keyset_t sec_keyset;
-ble_gap_enc_key_t m_own_enc_key;
-ble_gap_enc_key_t m_peer_enc_key;
 
 
 
 
 
-#if (NRF_LOG_ENABLED&&(!NRF_LOG_DEFERRED))
+
+#if NRF_LOG_ENABLED
 static TaskHandle_t m_logger_thread;
 #endif
 static void led_timer_handler(void *p_context)
@@ -37,8 +32,6 @@ void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt)
 {
     if ((m_conn_handle == p_evt->conn_handle) && (p_evt->evt_id == NRF_BLE_GATT_EVT_ATT_MTU_UPDATED))
     {
-        m_ble_nus_max_data_len = p_evt->params.att_mtu_effective - OPCODE_LENGTH - HANDLE_LENGTH;
-        NRF_LOG_INFO("Data len is set to 0x%X(%d)", m_ble_nus_max_data_len, m_ble_nus_max_data_len);
     }
     NRF_LOG_DEBUG("ATT MTU exchange completed. central 0x%x peripheral 0x%x",
                   p_gatt->att_mtu_desired_central,
@@ -65,7 +58,7 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 			
 			NRF_LOG_INFO("Connected");
 			m_conn_handle=p_ble_evt->evt.common_evt.conn_handle;
-		//rr_code = sd_ble_gap_authenticate(m_conn_handle,&sec_params_auth);
+			err_code = sd_ble_gap_authenticate(m_conn_handle,&sec_params);
 			G_CHECK_ERROR_CODE_INFO(err_code);
 			// hrs_timer_start();
 			break;
@@ -84,8 +77,9 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
 			break;
 		case BLE_GAP_EVT_SEC_PARAMS_REQUEST:	//收到配对的请求
 			NRF_LOG_INFO("BLE_GAP_EVT_SEC_PARAMS_REQUEST");
-		//	err_code = sd_ble_gap_sec_params_reply(m_conn_handle,BLE_GAP_SEC_STATUS_SUCCESS,&sec_params,NULL);
-			G_CHECK_ERROR_CODE_INFO(err_code);
+			
+			//err_code = sd_ble_gap_sec_params_reply(m_conn_handle,BLE_GAP_SEC_STATUS_SUCCESS,&sec_params,NULL);
+		//	G_CHECK_ERROR_CODE_INFO(err_code);
 			break;
 
 		case BLE_GAP_EVT_SEC_INFO_REQUEST:
@@ -112,34 +106,14 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt,void *context)
                NRF_LOG_INFO("Pair failed!");
                sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             } 
-			  NRF_LOG_INFO("BLE_GAP_EVT_AUTH_STATUS: status=0x%x bond=0x%x lv4: %d kdist_own:0x%x kdist_peer:0x%x",
-                          p_ble_evt->evt.gap_evt.params.auth_status.auth_status,
-                          p_ble_evt->evt.gap_evt.params.auth_status.bonded,
-                          p_ble_evt->evt.gap_evt.params.auth_status.sm1_levels.lv4,
-                          *((uint8_t *)&p_ble_evt->evt.gap_evt.params.auth_status.kdist_own),
-                          *((uint8_t *)&p_ble_evt->evt.gap_evt.params.auth_status.kdist_peer));
             break;
 
 		case BLE_GAP_EVT_CONN_SEC_UPDATE:	//配对输入密码后,触发次事件
 			NRF_LOG_INFO("connection security update");
 			break;
 		case BLE_GATTC_EVT_HVX:
-                  uint8_t i;
-				uint8_t data_buff[7] = {0};
-				ble_gattc_evt_hvx_t const *p_write_evt = &p_ble_evt->evt.gattc_evt.params.hvx;
-
 			NRF_LOG_INFO("BLE_GATTC_EVT_HVX");
-                        if(p_write_evt->len <= 0)
-                        {
-                          break;
-                        }
-				memcpy(data_buff,&p_write_evt->data,p_write_evt->len);
-	for(i=0;i<p_write_evt->len;i++)
-		{
-			NRF_LOG_INFO("%d",p_write_evt->data[i]);
-		}
 			break;
-
 		case BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP:
 			NRF_LOG_INFO("BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP");
 			break;
@@ -246,23 +220,31 @@ static void logger_thread(void *arg)
 		vTaskSuspend(NULL);
 	}
 }
+void vApplicationIdleHook( void )
+{
+#if NRF_LOG_ENABLED
+     vTaskResume(m_logger_thread);
+#endif
+}
+
 void main_log_init(void)
 {
 #if NRF_LOG_ENABLED
 	
 	//初始化log
-	ret_code_t err_code = NRF_LOG_INIT(get_rtc_counter);
-	//APP_ERROR_CHECK(err_code);
-	
+        ret_code_t err_code = NRF_LOG_INIT(get_rtc_counter);
+//	ret_code_t err_code = NRF_LOG_INIT(NULL);
+
 	//初始化RTT
 	NRF_LOG_DEFAULT_BACKENDS_INIT();
-//	NRF_LOG_INFO("log_init success.");
 	G_CHECK_ERROR_CODE_INFO(err_code);
-#elif (!NRF_LOG_DEFERRED)
-	if(pdPASS != xTaskCreate(logger_thread,"LOGGER",256,NULL,1&m_logger_thread))
+#if NRF_LOG_ENABLED
+	if(pdPASS != xTaskCreate(logger_thread,"LOGGER",256,NULL,1,&m_logger_thread))
 	{
 		APP_ERROR_HANDLER(NRF_ERROR_NO_MEM);
-	}        
+	}   
+#endif
+        
 #endif  
 	
 }
@@ -354,46 +336,37 @@ static void conn_params_init(void)
     err_code = ble_conn_params_init(&cp_init);
     APP_ERROR_CHECK(err_code);
 }
-
-static const char * m_roles_str[] =
-{
-    "Invalid Role",
-    "Peripheral",
-    "Central",
-};
-	static const char * m_sec_procedure_str[] =
-	{
-		"Encryption",
-		"Bonding",
-		"Pairing",
-	};
-		static const char * m_data_id_str[] =
-		{
-			"Outdated (0)",
-			"Service changed pending flag",
-			"Outdated (2)",
-			"Outdated (3)",
-			"Application data",
-			"Remote database",
-			"Peer rank",
-			"Bonding data",
-			"Local database",
-			"Central address resolution",
-		};
-			static const char * m_data_action_str[] =
-			{
-				"Update",
-				"Delete"
-			};
+/*****************************************************
+函数名:static void pm_evt_handler(pm_evt_t const * p_evt)
+参数:   
+return: 
+作用： peer_manager handler
+******************************************************/
 
 static void pm_evt_handler(pm_evt_t const * p_evt)
 {
- //   pm_handler_on_pm_evt(p_evt);
-    ret_code_t err_code;
+      ret_code_t err_code;
+      pm_handler_on_pm_evt(p_evt);
+
+	if(p_evt->evt_id == PM_EVT_CONN_SEC_CONFIG_REQ)
+		{
+			pm_conn_sec_config_t conn_sec_config = {.allow_repairing = true};
+			pm_conn_sec_config_reply(p_evt->conn_handle,&conn_sec_config);
+		}
+	else if(p_evt->evt_id == PM_EVT_CONN_SEC_FAILED)
+		{
+			if(p_evt->params.conn_sec_failed.procedure == PM_CONN_SEC_PROCEDURE_ENCRYPTION&&
+				p_evt->params.conn_sec_failed.error == PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING)
+				{
+					
+				}
+		}
     pm_handler_flash_clean(p_evt);
+#if 0
     switch (p_evt->evt_id)
+
 	{
-		case PM_EVT_BONDED_PEER_CONNECTED:		//已绑定设备建立链接
+		case :		//已绑定设备建立链接
 			NRF_LOG_INFO("PM_EVT_BONDED_PEER_CONNECTED");
 			//  conn_secure(p_evt->conn_handle, false);
 			break;
@@ -504,7 +477,15 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 		NRF_LOG_INFO("default");
 			break;
 	}
+#endif
 }
+
+/*****************************************************
+函数名：static void peer_manager_init(void)
+参数：无
+作用：初始化peer manager module,并配置sec manager参数
+******************************************************/
+
 static void peer_manager_init(void)
 {
 //    ble_gap_sec_params_t sec_param;
@@ -520,117 +501,178 @@ static void peer_manager_init(void)
 	}
     memset(&sec_params, 0, sizeof(ble_gap_sec_params_t));
 	
-//Bonding just works 
-sec_params.bond = SEC_PARAM_BOND;                //绑定
-sec_params.mitm = SEC_PARAM_MITM;                         //中间人攻击保护 MITM
-sec_params.lesc = SEC_PARAM_LESC;                            //使能LE secure connetion 配对
-sec_params.keypress = SEC_PARAM_KEYPRESS;     
-sec_params.io_caps = SEC_PARAM_IO_CAPABILITIES;
-sec_params.oob = SEC_PARAM_OOB;
-sec_params.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
-sec_params.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
+	//Bonding just works 
+	sec_params.bond = SEC_PARAM_BOND;                //绑定
+	sec_params.mitm = SEC_PARAM_MITM;                         //中间人攻击保护 MITM
+	sec_params.lesc = SEC_PARAM_LESC;                            //使能LE secure connetion 配对
+	sec_params.keypress = SEC_PARAM_KEYPRESS;     
+	sec_params.io_caps = SEC_PARAM_IO_CAPABILITIES;
+	sec_params.oob = SEC_PARAM_OOB;
+	sec_params.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
+	sec_params.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
 
-//分发本地的key(本设备) 4种key
-sec_params.kdist_own.enc = 1;	
-sec_params.kdist_own.id = 0;	
-//分发远端的key(配对的设配)
-sec_params.kdist_peer.enc = 1;
-sec_params.kdist_peer.id = 0;
+	//分发本地的key(本设备) 4种key
+	sec_params.kdist_own.enc = KIDST_OWN_ENC;	
+	sec_params.kdist_own.id = KIDST_OWN_ID;	
+	//分发远端的key(配对的设配)
+	sec_params.kdist_peer.enc = KIDST_PEER_ENC;
+	sec_params.kdist_peer.id = KIDST_PEER_ID;
 
-/*c_keyset.keys_own.p_enc_key = &m_own_enc_key;
-sec_keyset.keys_own.p_id_key = NULL;
-sec_keyset.keys_own.p_pk = NULL;
-sec_keyset.keys_own.p_sign_key = NULL;
-
-sec_keyset.keys_peer.p_enc_key = &m_peer_enc_key;
-sec_keyset.keys_peer.p_id_key = NULL;
-sec_keyset.keys_peer.p_pk = NULL;
-sec_keyset.keys_peer.p_sign_key = NULL;
-*/
-
-
-
-
-
-
-
-
-
-
+	
     err_code = pm_sec_params_set(&sec_params);
-   // APP_ERROR_CHECK(err_code);
 	G_CHECK_ERROR_CODE_INFO(err_code);
+   
     err_code = pm_register(pm_evt_handler);
-   // APP_ERROR_CHECK(err_code);
-   G_CHECK_ERROR_CODE_INFO(err_code);
+    G_CHECK_ERROR_CODE_INFO(err_code);
 
 }
+/*****************************************************
+函数名：
+参数：无
+作用：服务初始化 包含his服务
+******************************************************/
 
 static void idle_state_handle(void)
 {
-	 //NRF_LOG_INFO("idle_state_handle");
+	 NRF_LOG_INFO("idle_state_handle");
     if (NRF_LOG_PROCESS() == false)
     {
         nrf_pwr_mgmt_run();
     }
 }
 
-/*****************************************************
-函数：static void main_sec_params_bond(void)
-参数：
-作用：配对，使用绑定(绑定是为了减少配对的时间，配对是一种加密，
-链路加密,加密了链路数据包)
-*******************************************************/
-static void main_sec_params_bond(uint16_t conn_handle)
+/*#define WDTFEEDEVTWAITBIT  0x01
+#define WDTTASKSIZE 50
+#define WDTTASKPRIO 2
+void WdtFeedTask (void *paramenters);
+TaskHandle_t wdtFeedTaskHanle;*/
+
+
+#define START_TASK_SIZE 50
+#define START_TASK_PRIO  0
+TaskHandle_t StartTask_Handle;
+void Start_Task(void* pvParameters);
+
+/*#define RTCUpdateSemMaxCount 1
+#define RTCUpdateSemInitCount 0
+SemaphoreHandle_t RTCUpdateSem;
+
+EventGroupHandle_t wdtFeedEventHandle;
+
+
+#define RTC_UPDATE_TASK_SIZE 50
+#define RTC_UPDATE_TASK_PRIO 2
+TaskHandle_t RTCUpdateTaskHandle;
+void RTCUpdateTaskHandler(void *pvParamenters);
+
+EventGroupHandle_t wdtFeedEventHandle;*/
+
+			BaseType_t ret;
+			uint32_t freemem;
+
+
+
+/*void WdtFeedTask (void *paramenters)
 {
-	ret_code_t err_code;
-	sec_params.oob = 0;
-	sec_params.bond = 0;
-	sec_params.mitm = 1;	//MITM 保护 中间人攻击:Man In The Middle attack
-	sec_params.io_caps = BLE_GAP_IO_CAPS_DISPLAY_ONLY;
-	sec_params.min_key_size = 7;
-	sec_params.max_key_size = 16;
-	//err_code = sd_ble_gap_sec_params_reply(conn_handle,BLE_GAP_SEC_STATUS_SUCCESS,&sec_params,NULL);
-	//G_CHECK_ERROR_CODE_INFO(err_code);
+	EventBits_t wdtFeedEvt = 0;
+	while(1)
+		{
+			//xEventGroupGetBits(wdtFeedEventHandle);
+			wdtFeedEvt = xEventGroupWaitBits(wdtFeedEventHandle,
+			WDTFEEDEVTWAITBIT,pdTRUE,pdTRUE,portMAX_DELAY);
+			if(wdtFeedEvt == WDTFEEDEVTWAITBIT)
+					nrfx_wdt_feed();		
+		}
 }
+
+
+
+	void RTCUpdateTaskHandler(void *pvParamenters)
+{
+	
+	uint8_t buff[7] = {0};
+		while(1)
+		{
+		
+			xSemaphoreTake(RTCUpdateSem,portMAX_DELAY);
+			xEventGroupSetBits(wdtFeedEventHandle,RTC_UPDATE_EVENT_BIT);
+			update_date();
+		//	data_convert(current_time,buff);
+		//	ble_date_notification();
+		}
+}
+
+
+*/
+//extern void WdtFeedTask (void *paramenters);
+
+	void Start_Task(void* pvParameters)
+	{
+		taskENTER_CRITICAL();
+
+		RTCUpdateSem = xSemaphoreCreateCounting(RTCUpdateSemMaxCount,RTCUpdateSemInitCount);
+                if(RTCUpdateSem == NULL)
+									while(1);
+		wdtFeedEventHandle = xEventGroupCreate();
+								if(wdtFeedEventHandle == NULL)
+									while(1);
+
+		ret = xTaskCreate((TaskFunction_t)RTCUpdateTaskHandler,
+														(const char *)"rtc",
+														(uint16_t)RTC_UPDATE_TASK_SIZE,
+														(void*)NULL,
+														(UBaseType_t)RTC_UPDATE_TASK_PRIO,
+														&RTCUpdateTaskHandle);
+		if(ret != pdPASS )
+                  	{
+                      freemem =	xPortGetFreeHeapSize();
+			while(1);
+                  	}
+														
+	ret =	xTaskCreate(WdtFeedTask,"wdt",WDTTASKSIZE,NULL,WDTTASKPRIO,&wdtFeedTaskHanle);
+        
+				if(ret != pdPASS )
+                                {
+                                   freemem =	xPortGetFreeHeapSize();
+			while(1);
+        }
+			freemem =	xPortGetFreeHeapSize();
+	vTaskDelete(NULL);
+		taskEXIT_CRITICAL();
+		
+	}
 
 int main(void)
 {
 	ret_code_t err_code;
-
+	bool ret;
 	main_log_init();
-//	main_leds_init();
-//	main_lfclk_config();
-//	main_timer_init();
-   
-	power_management_init();
+	//power_management_init();
+	SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 	ble_stack_init();
 	gap_params_init();
 	gatt_init();
 	service_init();
-//    advertising_init();
-  //  advertising1_init();
-      advertising_all_params_init();
+  advertising_all_params_init();
 	
-//	service_his_init();
 	conn_params_init();
 	peer_manager_init();
-//   advertising_start();
-   rtcdate_task_init();
-   nrf_sdh_freertos_init(&advertising_free_start,NULL);
+  CommonWatchDogInit();
 
-	
-//  RTC2_init(NULL);
-  vTaskStartScheduler();
- //
-	while(1)
-	{
-		//NRF_LOG_INFO("time_cnt: %d\n",app_timer_cnt_get());
-	//	app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
-		//app_timer_start(led_timer,APP_TIMER_TICKS(50),NULL);
-       //   nrfx_rtc_counter_clear(&rtc2);
- 
-		idle_state_handle();
-	}
+
+	xTaskCreate((TaskFunction_t)Start_Task,
+					(const char *)"Start_task",
+					(uint16_t)START_TASK_SIZE,
+					(void *)NULL,
+					(UBaseType_t)START_TASK_PRIO,
+					(TaskHandle_t)&StartTask_Handle);
+    nrf_sdh_freertos_init(&advertising_free_start,NULL);
+
+   vTaskStartScheduler();
+
+    for (;;)
+    {
+        APP_ERROR_HANDLER(NRF_ERROR_FORBIDDEN);
+    }
 }
 

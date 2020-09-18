@@ -1,10 +1,10 @@
 #define SERVICE_GLOBAL
 #include "global.h"
+#include "rtc.h"
+#include "ble_date.h"
 
 
 NRF_BLE_QWR_DEF(m_qwr);
-
-
 static void nrf_qwr_error_handler(uint32_t nrf_error)
 {
     APP_ERROR_HANDLER(nrf_error);
@@ -22,35 +22,60 @@ void service_init(void)
 	
    qwr_init.error_handler = nrf_qwr_error_handler;
 
-    err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
+   err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
 
-	G_CHECK_ERROR_CODE_INFO(err_code);
-    ble_service_rtcTime_init();
-	service_bas_init();
-	
+   G_CHECK_ERROR_CODE_INFO(err_code);
+   service_date_init();
 
 }
-#if BLE_DIS_ENABLED
-#define MANUFANCTURER_NAME "IIII"
-void service_dis_init(void)
+
+/*****************************************************
+函数名：void service_date_init(void)
+参数：无
+作用：初始化date time 服务
+******************************************************/
+void service_date_init(void)
 {
-	ble_dis_init_t dis_init;
-	memset(&dis_init,0,sizeof(dis_init));
-	
-	ble_srv_ascii_to_utf8(&dis_init.manufact_name_str,(char*)MANUFANCTURER_NAME);
-	
-	dis_init.dis_char_rd_sec = SEC_OPEN;
-	ret_code_t err_code = ble_dis_init(&dis_init);
-	
+	ret_code_t err_code;
+	RTC2_init(NULL);
+	err_code = ble_date_init();
+	G_CHECK_ERROR_CODE_INFO(err_code);
 }
 
-#endif
 
-#if BLE_BAS_ENABLED
+#define START_TASK_SIZE 50
+#define START_TASK_PRIO 2
+TaskHandle_t StartTaskHandle;
+void start_task(void *paramenters);
+
+/*void start_task(void *paramenters)
+{
+	BaseType_t ret;
+	taskENTER_CRITICAL();
+	ret = xTaskCreate((TaskFunction_t)RTCUpdateTaskHandler,
+								(const char *)"rtc", 
+								(uint16_t) RTC_UPDATE_TASK_SIZE, 
+								(void *) NULL,
+								(UBaseType_t)RTC_UPDATE_TASK_PRIO,
+								(TaskHandle_t *)&RTCUpdateTaskHandle);
+
+		taskEXIT_CRITICAL();
+			if(ret != pdPASS)
+			NRF_LOG_INFO("start_task fist task faild");
+}*/
+
+void service_task_init(void)
+{
+//	rtc_task_init();
+
+}
+
+
+
 BLE_BAS_DEF(m_battery);
 void service_bas_init(void)
 {
-  ret_code_t err_code;
+    ret_code_t err_code;
 	ble_bas_init_t battery_init;
 	battery_init.bl_cccd_wr_sec = SEC_OPEN;
 	battery_init.bl_rd_sec = SEC_OPEN;
@@ -65,10 +90,12 @@ void service_bas_init(void)
 
 void bas_notification_send(uint8_t data,uint16_t conn_handle)
 {
-        ble_bas_battery_level_update(&m_battery,data,conn_handle);
+        ble_bas_battery_level_update(&m_battery,data,BLE_CONN_HANDLE_ALL);
 }
 
-#endif
+
+
+
 
 
 
